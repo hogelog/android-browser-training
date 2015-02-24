@@ -9,6 +9,7 @@ import org.hogel.browser.views.MainWebView;
 
 
 public class MainActivity extends AbstractActivity {
+    private static final String DEFAULT_URL = "http://cookpad.com/";
 
     @InjectView(R.id.main_webview)
     MainWebView mainWebview;
@@ -17,8 +18,9 @@ public class MainActivity extends AbstractActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
 
+        setup();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -44,5 +46,15 @@ public class MainActivity extends AbstractActivity {
             return;
         }
         super.onBackPressed();
+    }
+
+    private void setup() {
+        mainWebview.setCallback(new MainWebView.Callback() {
+            @Override
+            public void onLoadResource(String title) {
+                setTitle(title);
+            }
+        });
+        mainWebview.loadUrl(DEFAULT_URL);
     }
 }

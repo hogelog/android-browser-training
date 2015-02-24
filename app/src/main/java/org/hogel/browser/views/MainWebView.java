@@ -3,6 +3,7 @@ package org.hogel.browser.views;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -11,8 +12,8 @@ import android.webkit.WebViewClient;
 import java.util.regex.Pattern;
 
 public class MainWebView extends WebView {
-    private static final String DEFAULT_URL = "http://cookpad.com/";
     private static final Pattern PATTERN_URL_INSIDE = Pattern.compile("^https?://cookpad.com(?:$|/.*)");
+    private @Nullable Callback callback;
 
     public MainWebView(Context context) {
         super(context);
@@ -24,12 +25,18 @@ public class MainWebView extends WebView {
         setup();
     }
 
+    public void setCallback(Callback callback) {
+        this.callback = callback;
+    }
+
     private void setup() {
         WebSettings webSettings = getSettings();
         webSettings.setJavaScriptEnabled(true);
         setWebViewClient(new Client());
+    }
 
-        loadUrl(DEFAULT_URL);
+    public interface Callback {
+        void onLoadResource(String title);
     }
 
     private class Client extends WebViewClient {
@@ -41,6 +48,14 @@ public class MainWebView extends WebView {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             getContext().startActivity(intent);
             return true;
+        }
+
+        @Override
+        public void onLoadResource(WebView view, String url) {
+            super.onLoadResource(view, url);
+            if (callback != null) {
+                callback.onLoadResource(getTitle());
+            }
         }
     }
 }
