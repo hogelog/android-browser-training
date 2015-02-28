@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import butterknife.InjectView;
+import com.splunk.mint.Mint;
 import org.hogel.browser.R;
 import org.hogel.browser.views.MainWebView;
 
@@ -43,8 +44,10 @@ public class MainActivity extends AbstractActivity {
     public void onBackPressed() {
         if (mainWebview.canGoBack()) {
             mainWebview.goBack();
+            Mint.logEvent("back_page");
             return;
         }
+        Mint.logEvent("back_app");
         super.onBackPressed();
     }
 
