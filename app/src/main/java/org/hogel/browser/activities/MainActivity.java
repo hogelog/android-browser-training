@@ -6,12 +6,11 @@ import android.view.MenuItem;
 import butterknife.InjectView;
 import com.splunk.mint.Mint;
 import org.hogel.browser.R;
+import org.hogel.browser.consts.UrlConst;
 import org.hogel.browser.views.MainWebView;
 
 
 public class MainActivity extends AbstractActivity {
-    private static final String DEFAULT_URL = "http://cookpad.com/";
-
     @InjectView(R.id.main_webview)
     MainWebView mainWebview;
 
@@ -58,6 +57,6 @@ public class MainActivity extends AbstractActivity {
                 setTitle(title);
             }
         });
-        mainWebview.loadUrl(DEFAULT_URL);
+        mainWebview.loadUrl(UrlConst.URL_LAUNCH);
     }
 }

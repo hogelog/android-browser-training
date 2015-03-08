@@ -9,11 +9,9 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import com.splunk.mint.Mint;
-
-import java.util.regex.Pattern;
+import org.hogel.browser.consts.UrlConst;
 
 public class MainWebView extends WebView {
-    private static final Pattern PATTERN_URL_INSIDE = Pattern.compile("^https?://cookpad.com(?:$|/.*)");
     private @Nullable Callback callback;
 
     public MainWebView(Context context) {
@@ -43,7 +41,7 @@ public class MainWebView extends WebView {
     private class Client extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if (PATTERN_URL_INSIDE.matcher(url).find()) {
+            if (UrlConst.PATTERN_URL_INSIDE.matcher(url).find()) {
                 Mint.logEvent("go_page");
                 return false;
             }
