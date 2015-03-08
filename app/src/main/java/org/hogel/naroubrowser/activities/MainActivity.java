@@ -1,13 +1,13 @@
-package org.hogel.browser.activities;
+package org.hogel.naroubrowser.activities;
 
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import butterknife.InjectView;
 import com.splunk.mint.Mint;
-import org.hogel.browser.R;
-import org.hogel.browser.consts.UrlConst;
-import org.hogel.browser.views.MainWebView;
+import org.hogel.naroubrowser.R;
+import org.hogel.naroubrowser.consts.UrlConst;
+import org.hogel.naroubrowser.views.MainWebView;
 
 
 public class MainActivity extends AbstractActivity {

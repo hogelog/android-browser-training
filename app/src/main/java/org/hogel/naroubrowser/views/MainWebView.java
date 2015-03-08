@@ -1,4 +1,4 @@
-package org.hogel.browser.views;
+package org.hogel.naroubrowser.views;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +9,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import com.splunk.mint.Mint;
-import org.hogel.browser.consts.UrlConst;
+import org.hogel.naroubrowser.consts.UrlConst;
 
 public class MainWebView extends WebView {
     private @Nullable Callback callback;

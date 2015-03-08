@@ -1,4 +1,4 @@
-package org.hogel.browser;
+package org.hogel.naroubrowser;
 
 import android.app.Application;
 import com.splunk.mint.Mint;

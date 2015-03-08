@@ -3,10 +3,10 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="org.hogel.browser.MainActivity"
+        tools:context="org.hogel.naroubrowser.MainActivity"
         >
 
-    <org.hogel.browser.views.MainWebView
+    <org.hogel.naroubrowser.views.MainWebView
             android:id="@+id/main_webview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -1,4 +1,4 @@
-package org.hogel.browser.activities;
+package org.hogel.naroubrowser.activities;
 
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;

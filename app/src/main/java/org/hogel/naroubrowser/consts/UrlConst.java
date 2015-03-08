@@ -1,4 +1,4 @@
-package org.hogel.browser.consts;
+package org.hogel.naroubrowser.consts;
 
 import java.util.regex.Pattern;
 
