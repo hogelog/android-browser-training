@@ -5,7 +5,7 @@ android {
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-        applicationId "org.hogel.browser"
+        applicationId "org.hogel.naroubrowser"
         minSdkVersion 21
         targetSdkVersion 21
         versionCode 1_000_000
