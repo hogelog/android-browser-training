@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'deploygate'
 
 android {
     compileSdkVersion 21
@@ -26,6 +27,21 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
+    }
+}
+
+deploygate {
+    userName = "${project.property("deploygate_user")}"
+    token = "${project.property("deploygate_token")}"
+
+    apks {
+        release {
+            sourceFile = file("build/outputs/apk/app-release.apk")
+        }
+
+        debug {
+            sourceFile = file("build/outputs/apk/app-debug.apk")
+        }
     }
 }
 
