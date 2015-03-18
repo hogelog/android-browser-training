@@ -1,27 +1,34 @@
 package org.hogel.naroubrowser.activities;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import butterknife.InjectView;
-import com.google.android.gms.analytics.Tracker;
 import org.hogel.naroubrowser.BrowserApplication;
 import org.hogel.naroubrowser.R;
 import org.hogel.naroubrowser.consts.UrlConst;
+import org.hogel.naroubrowser.utils.AnalyticsUtils;
 import org.hogel.naroubrowser.views.MainWebView;
+
+import javax.inject.Inject;
 
 
 public class MainActivity extends AbstractActivity {
+
+    @Inject
+    AnalyticsUtils analyticsUtils;
+
+    @Inject
+    Context context;
+
     @InjectView(R.id.main_webview)
     MainWebView mainWebview;
-
-    Tracker tracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         setup();
 
         if (savedInstanceState == null) {
@@ -32,7 +39,7 @@ public class MainActivity extends AbstractActivity {
     }
 
     private void setup() {
-        tracker = ((BrowserApplication) getApplication()).getTracker();
+        BrowserApplication.component(this).inject(this);
 
         mainWebview.setCallback(new MainWebView.Callback() {
             @Override

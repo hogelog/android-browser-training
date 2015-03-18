@@ -8,26 +8,35 @@ import android.util.AttributeSet;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import org.hogel.naroubrowser.BrowserApplication;
 import org.hogel.naroubrowser.consts.UrlConst;
+import org.hogel.naroubrowser.utils.AnalyticsUtils;
+
+import javax.inject.Inject;
 
 public class MainWebView extends WebView {
+
+    @Inject
+    AnalyticsUtils analyticsUtils;
+
     private @Nullable Callback callback;
 
     public MainWebView(Context context) {
         super(context);
-        setup();
+        setup(context);
     }
 
     public MainWebView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setup();
+        setup(context);
     }
 
     public void setCallback(Callback callback) {
         this.callback = callback;
     }
 
-    private void setup() {
+    private void setup(Context context) {
+        BrowserApplication.component(context).inject(this);
         WebSettings webSettings = getSettings();
         webSettings.setJavaScriptEnabled(true);
         setWebViewClient(new Client());
@@ -40,6 +49,8 @@ public class MainWebView extends WebView {
     private class Client extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            analyticsUtils.trackViewUrl(url);
+
             if (UrlConst.PATTERN_URL_INSIDE.matcher(url).find()) {
                 return false;
             }
