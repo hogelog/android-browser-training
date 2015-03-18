@@ -2,9 +2,11 @@ package org.hogel.naroubrowser.views;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -40,10 +42,15 @@ public class MainWebView extends WebView {
         WebSettings webSettings = getSettings();
         webSettings.setJavaScriptEnabled(true);
         setWebViewClient(new Client());
+        setWebChromeClient(new ChromeClient());
     }
 
     public interface Callback {
-        void onLoadResource(String title);
+        void onPageStarted();
+
+        void onProgressChanged(int newProgress);
+
+        void onPageFinished();
     }
 
     private class Client extends WebViewClient {
@@ -60,10 +67,28 @@ public class MainWebView extends WebView {
         }
 
         @Override
-        public void onLoadResource(WebView view, String url) {
-            super.onLoadResource(view, url);
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
             if (callback != null) {
-                callback.onLoadResource(getTitle());
+                callback.onPageStarted();
+            }
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            if (callback != null) {
+                callback.onPageFinished();
+            }
+        }
+    }
+
+    private class ChromeClient extends WebChromeClient {
+        @Override
+        public void onProgressChanged(WebView view, int newProgress) {
+            super.onProgressChanged(view, newProgress);
+            if (callback != null) {
+                callback.onProgressChanged(newProgress);
             }
         }
     }

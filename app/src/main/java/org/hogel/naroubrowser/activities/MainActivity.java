@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import butterknife.InjectView;
 import org.hogel.naroubrowser.BrowserApplication;
 import org.hogel.naroubrowser.R;
@@ -25,10 +27,14 @@ public class MainActivity extends AbstractActivity {
     @InjectView(R.id.main_webview)
     MainWebView mainWebview;
 
+    @InjectView(R.id.progress_bar)
+    ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         setup();
 
         if (savedInstanceState == null) {
@@ -43,8 +49,20 @@ public class MainActivity extends AbstractActivity {
 
         mainWebview.setCallback(new MainWebView.Callback() {
             @Override
-            public void onLoadResource(String title) {
-                setTitle(title);
+            public void onPageStarted() {
+                progressBar.setProgress(0);
+                progressBar.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onPageFinished() {
+                progressBar.setProgress(100);
+                progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onProgressChanged(int progress) {
+                progressBar.setProgress(progress);
             }
         });
     }
