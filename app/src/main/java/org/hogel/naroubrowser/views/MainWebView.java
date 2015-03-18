@@ -8,7 +8,6 @@ import android.util.AttributeSet;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import com.splunk.mint.Mint;
 import org.hogel.naroubrowser.consts.UrlConst;
 
 public class MainWebView extends WebView {
@@ -42,10 +41,8 @@ public class MainWebView extends WebView {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             if (UrlConst.PATTERN_URL_INSIDE.matcher(url).find()) {
-                Mint.logEvent("go_page");
                 return false;
             }
-            Mint.logEvent("go_app");
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             getContext().startActivity(intent);
             return true;
