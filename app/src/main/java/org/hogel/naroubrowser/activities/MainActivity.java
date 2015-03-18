@@ -18,7 +18,27 @@ public class MainActivity extends AbstractActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setup();
+        if (savedInstanceState == null) {
+            setup();
+        } else {
+            mainWebview.restoreState(savedInstanceState);
+        }
+    }
+
+    private void setup() {
+        mainWebview.setCallback(new MainWebView.Callback() {
+            @Override
+            public void onLoadResource(String title) {
+                setTitle(title);
+            }
+        });
+        mainWebview.loadUrl(UrlConst.URL_LAUNCH);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mainWebview.saveState(outState);
     }
 
     @Override
@@ -45,15 +65,5 @@ public class MainActivity extends AbstractActivity {
             return;
         }
         super.onBackPressed();
-    }
-
-    private void setup() {
-        mainWebview.setCallback(new MainWebView.Callback() {
-            @Override
-            public void onLoadResource(String title) {
-                setTitle(title);
-            }
-        });
-        mainWebview.loadUrl(UrlConst.URL_LAUNCH);
     }
 }
