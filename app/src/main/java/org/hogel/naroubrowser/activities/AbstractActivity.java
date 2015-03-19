@@ -1,13 +1,13 @@
 package org.hogel.naroubrowser.activities;
 
-import android.app.Activity;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import org.hogel.naroubrowser.BrowserApplication;
 import org.hogel.naroubrowser.di.BrowserComponent;
 
-public class AbstractActivity extends Activity {
+public class AbstractActivity extends ActionBarActivity {
 
     @Override
     public void setContentView(int layoutResID) {

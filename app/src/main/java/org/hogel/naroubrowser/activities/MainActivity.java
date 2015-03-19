@@ -28,6 +28,9 @@ public class MainActivity extends AbstractActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        component().inject(this);
+
         setContentView(R.layout.activity_main);
 
         setup();
@@ -40,8 +43,6 @@ public class MainActivity extends AbstractActivity {
     }
 
     private void setup() {
-        component().inject(this);
-
         mainWebview.setCallback(new MainWebView.Callback() {
             @Override
             public void onPageStarted() {
