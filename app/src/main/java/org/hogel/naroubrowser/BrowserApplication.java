@@ -2,8 +2,11 @@ package org.hogel.naroubrowser;
 
 import android.app.Application;
 import android.content.Context;
+import android.graphics.Typeface;
+import com.github.hotchpotch.iconicfontengine.IconicFontEngine;
 import com.splunk.mint.Mint;
 import org.hogel.naroubrowser.di.BrowserComponent;
+import org.hogel.naroubrowser.views.FontAwesomeEngine;
 
 public class BrowserApplication extends Application {
 
@@ -20,6 +23,10 @@ public class BrowserApplication extends Application {
         }
 
         buildComponentAndInject();
+
+        IconicFontEngine.addDefaultEngine(
+            new FontAwesomeEngine(Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf"))
+        );
     }
 
     public void buildComponentAndInject() {
