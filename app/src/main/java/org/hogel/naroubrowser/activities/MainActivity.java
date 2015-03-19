@@ -81,6 +81,9 @@ public class MainActivity extends AbstractActivity {
 
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == R.id.action_reload) {
+            mainWebview.reload();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
