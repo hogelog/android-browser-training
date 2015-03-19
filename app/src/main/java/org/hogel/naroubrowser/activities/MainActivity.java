@@ -1,16 +1,14 @@
 package org.hogel.naroubrowser.activities;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import butterknife.InjectView;
-import org.hogel.naroubrowser.BrowserApplication;
 import org.hogel.naroubrowser.R;
 import org.hogel.naroubrowser.consts.UrlConst;
-import org.hogel.naroubrowser.utils.AnalyticsUtils;
+import org.hogel.naroubrowser.services.AnalyticsService;
 import org.hogel.naroubrowser.views.MainWebView;
 
 import javax.inject.Inject;
@@ -19,10 +17,7 @@ import javax.inject.Inject;
 public class MainActivity extends AbstractActivity {
 
     @Inject
-    AnalyticsUtils analyticsUtils;
-
-    @Inject
-    Context context;
+    AnalyticsService analyticsService;
 
     @InjectView(R.id.main_webview)
     MainWebView mainWebview;
@@ -45,7 +40,7 @@ public class MainActivity extends AbstractActivity {
     }
 
     private void setup() {
-        BrowserApplication.component(this).inject(this);
+        component().inject(this);
 
         mainWebview.setCallback(new MainWebView.Callback() {
             @Override

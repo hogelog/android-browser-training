@@ -12,14 +12,14 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import org.hogel.naroubrowser.BrowserApplication;
 import org.hogel.naroubrowser.consts.UrlConst;
-import org.hogel.naroubrowser.utils.AnalyticsUtils;
+import org.hogel.naroubrowser.services.AnalyticsService;
 
 import javax.inject.Inject;
 
 public class MainWebView extends WebView {
 
     @Inject
-    AnalyticsUtils analyticsUtils;
+    AnalyticsService analyticsService;
 
     private @Nullable Callback callback;
 
@@ -56,7 +56,7 @@ public class MainWebView extends WebView {
     private class Client extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            analyticsUtils.trackViewUrl(url);
+            analyticsService.trackViewUrl(url);
 
             if (UrlConst.PATTERN_URL_INSIDE.matcher(url).find()) {
                 return false;

@@ -6,9 +6,7 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import dagger.Module;
 import dagger.Provides;
-import org.hogel.naroubrowser.BrowserApplication;
 import org.hogel.naroubrowser.R;
-import org.hogel.naroubrowser.utils.AnalyticsUtils;
 
 import javax.inject.Singleton;
 
@@ -36,17 +34,5 @@ public class BrowserModule {
     @Singleton
     Tracker provideTracker(GoogleAnalytics googleAnalytics) {
         return googleAnalytics.newTracker(R.xml.app_tracker);
-    }
-
-    @Provides
-    @Singleton
-    AnalyticsUtils provideAnalyticsUtils() {
-        AnalyticsUtils analyticsUtils = new AnalyticsUtils();
-        component().inject(analyticsUtils);
-        return analyticsUtils;
-    }
-
-    private BrowserComponent component() {
-        return BrowserApplication.component(application);
     }
 }
