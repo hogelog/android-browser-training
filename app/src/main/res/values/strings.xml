@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">なろうブラウザ</string>
 
+    <string name="action_bookmark">ブックマーク</string>
     <string name="action_reload">リロード</string>
     <string name="action_settings">設定</string>
 </resources>

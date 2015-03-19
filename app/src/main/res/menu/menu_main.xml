@@ -3,13 +3,15 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="org.hogel.naroubrowser.MainActivity">
 
+    <item android:id="@+id/action_bookmark"
+          android:title="@string/action_bookmark"
+          android:icon="@drawable/ic_action_important"
+          app:showAsAction="ifRoom"
+            />
+
     <item android:id="@+id/action_reload"
           android:title="@string/action_reload"
           android:icon="@drawable/ic_action_refresh"
           app:showAsAction="ifRoom"
           />
-
-    <!--<item android:id="@+id/action_settings"-->
-          <!--android:title="@string/action_settings"-->
-          <!--app:showAsAction="never"/>-->
 </menu>
