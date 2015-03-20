@@ -87,6 +87,9 @@ public class MainActivity extends AbstractActivity {
         } else if (id == R.id.action_reload) {
             mainWebview.reload();
             return true;
+        } else if (id == R.id.action_ranking) {
+            mainWebview.loadUrl(UrlConst.URL_RANKING);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
