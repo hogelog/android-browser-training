@@ -5,4 +5,6 @@
     <string name="action_reload">リロード</string>
     <string name="action_settings">設定</string>
     <string name="action_ranking">ランキング</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">キャンセル</string>
 </resources>

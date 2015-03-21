@@ -1,16 +1,20 @@
 package org.hogel.naroubrowser.views;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import org.hogel.naroubrowser.BrowserApplication;
+import org.hogel.naroubrowser.R;
 import org.hogel.naroubrowser.consts.UrlConst;
 import org.hogel.naroubrowser.services.AnalyticsService;
 
@@ -90,6 +94,29 @@ public class MainWebView extends WebView {
             if (callback != null) {
                 callback.onProgressChanged(newProgress);
             }
+        }
+
+        @Override
+        public boolean onJsConfirm(WebView view, String url, String message, final JsResult result) {
+            new AlertDialog.Builder(getContext())
+                .setTitle(url)
+                .setMessage(message)
+                .setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        result.confirm();
+                    }
+                })
+                .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        result.cancel();
+                    }
+                })
+                .create()
+                .show();
+
+            return true;
         }
     }
 }
