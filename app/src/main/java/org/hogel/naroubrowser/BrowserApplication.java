@@ -2,6 +2,7 @@ package org.hogel.naroubrowser;
 
 import android.app.Application;
 import android.content.Context;
+import android.webkit.WebView;
 import com.splunk.mint.Mint;
 import org.hogel.naroubrowser.di.BrowserComponent;
 
@@ -17,6 +18,8 @@ public class BrowserApplication extends Application {
         if (BuildConfig.DEBUG) {
             Mint.enableDebug();
             Mint.flush();
+
+            WebView.setWebContentsDebuggingEnabled(true);
         }
 
         buildComponentAndInject();
