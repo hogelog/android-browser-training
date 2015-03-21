@@ -16,6 +16,8 @@ import android.webkit.WebViewClient;
 import org.hogel.naroubrowser.BrowserApplication;
 import org.hogel.naroubrowser.R;
 import org.hogel.naroubrowser.consts.UrlConst;
+import org.hogel.naroubrowser.db.dao.VisitedUrlDao;
+import org.hogel.naroubrowser.db.entities.VisitedUrl;
 import org.hogel.naroubrowser.services.AnalyticsService;
 
 import javax.inject.Inject;
@@ -24,6 +26,9 @@ public class MainWebView extends WebView {
 
     @Inject
     AnalyticsService analyticsService;
+
+    @Inject
+    VisitedUrlDao visitedUrlDao;
 
     private @Nullable Callback callback;
 
@@ -84,6 +89,8 @@ public class MainWebView extends WebView {
             if (callback != null) {
                 callback.onPageFinished();
             }
+
+            visitedUrlDao.create(url, getTitle());
         }
     }
 

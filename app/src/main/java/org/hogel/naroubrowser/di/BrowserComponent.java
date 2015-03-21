@@ -3,7 +3,9 @@ package org.hogel.naroubrowser.di;
 import dagger.Component;
 import org.hogel.naroubrowser.BrowserApplication;
 import org.hogel.naroubrowser.activities.MainActivity;
+import org.hogel.naroubrowser.db.dao.VisitedUrlDao;
 import org.hogel.naroubrowser.services.AnalyticsService;
+import org.hogel.naroubrowser.services.DatabaseService;
 import org.hogel.naroubrowser.views.MainWebView;
 
 import javax.inject.Singleton;
@@ -26,4 +28,8 @@ public interface BrowserComponent {
     void inject(MainWebView mainWebView);
 
     AnalyticsService getAnalyticsService();
+
+    DatabaseService getDatabaseService();
+
+    VisitedUrlDao getVisitedUrlDao();
 }
