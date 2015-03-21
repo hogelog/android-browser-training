@@ -23,6 +23,7 @@ public class BrowserApplication extends Application {
         }
 
         buildComponentAndInject();
+        StethoService.initialize(this);
     }
 
     public void buildComponentAndInject() {
