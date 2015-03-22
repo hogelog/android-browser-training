@@ -90,7 +90,9 @@ public class MainWebView extends WebView {
                 callback.onPageFinished();
             }
 
-            visitedUrlDao.create(url, getTitle());
+            if (!visitedUrlDao.isExist(url)) {
+                visitedUrlDao.create(url, getTitle());
+            }
         }
     }
 

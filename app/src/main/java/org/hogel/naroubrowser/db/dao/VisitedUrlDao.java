@@ -17,4 +17,9 @@ public class VisitedUrlDao {
     public void create(String url, String title) {
         databaseService.execute("INSERT INTO visited_urls (url, title) VALUES (?, ?);", url, title);
     }
+
+    public boolean isExist(String url) {
+        Integer result = databaseService.query(Integer.class, "SELECT 1 FROM visited_urls WHERE url = ? LIMIT 1;", url);
+        return result != null;
+    }
 }
