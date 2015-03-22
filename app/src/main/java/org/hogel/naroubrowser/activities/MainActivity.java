@@ -1,6 +1,8 @@
 package org.hogel.naroubrowser.activities;
 
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +27,12 @@ public class MainActivity extends AbstractActivity {
     @InjectView(R.id.progress_bar)
     ProgressBar progressBar;
 
+    private ActionBar actionBar;
+
+    private int actionBarScrollThreshold;
+
+    private int scrolling = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +51,9 @@ public class MainActivity extends AbstractActivity {
     }
 
     private void setup() {
+        Resources resources = getResources();
+        actionBarScrollThreshold = resources.getDimensionPixelSize(R.dimen.action_bar_scroll_threshold);
+
         mainWebview.setCallback(new MainWebView.Callback() {
             @Override
             public void onPageStarted() {
@@ -60,7 +71,29 @@ public class MainActivity extends AbstractActivity {
             public void onProgressChanged(int progress) {
                 progressBar.setProgress(progress);
             }
+
+            @Override
+            public void onScrollX(int X) {
+            }
+
+            @Override
+            public void onScrollY(int y) {
+                if (scrolling > 0 && y > 0) {
+                    scrolling += y;
+                } else if (scrolling < 0 && y < 0) {
+                    scrolling += y;
+                } else {
+                    scrolling = y;
+                }
+                if (scrolling >= actionBarScrollThreshold) {
+                    actionBar.hide();
+                } else if (scrolling < -actionBarScrollThreshold) {
+                    actionBar.show();
+                }
+            }
         });
+
+        actionBar = getSupportActionBar();
     }
 
     @Override

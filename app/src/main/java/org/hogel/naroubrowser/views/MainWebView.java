@@ -17,12 +17,23 @@ import org.hogel.naroubrowser.BrowserApplication;
 import org.hogel.naroubrowser.R;
 import org.hogel.naroubrowser.consts.UrlConst;
 import org.hogel.naroubrowser.db.dao.VisitedUrlDao;
-import org.hogel.naroubrowser.db.entities.VisitedUrl;
 import org.hogel.naroubrowser.services.AnalyticsService;
 
 import javax.inject.Inject;
 
 public class MainWebView extends WebView {
+
+    public interface Callback {
+        void onPageStarted();
+
+        void onProgressChanged(int newProgress);
+
+        void onPageFinished();
+
+        void onScrollX(int X);
+
+        void onScrollY(int y);
+    }
 
     @Inject
     AnalyticsService analyticsService;
@@ -46,20 +57,31 @@ public class MainWebView extends WebView {
         this.callback = callback;
     }
 
+    @Override
+    protected void onScrollChanged(int l, int t, int oldl, int oldt) {
+        super.onScrollChanged(l, t, oldl, oldt);
+        if (callback == null) {
+            return;
+        }
+        if (l != oldl) {
+            callback.onScrollX(l - oldl);
+        }
+        if (t != oldt) {
+            callback.onScrollY(t - oldt);
+        }
+    }
+
+    @Override
+    protected void onOverScrolled(int scrollX, int scrollY, boolean clampedX, boolean clampedY) {
+        super.onOverScrolled(scrollX, scrollY, clampedX, clampedY);
+    }
+
     private void setup(Context context) {
         BrowserApplication.component(context).inject(this);
         WebSettings webSettings = getSettings();
         webSettings.setJavaScriptEnabled(true);
         setWebViewClient(new Client());
         setWebChromeClient(new ChromeClient());
-    }
-
-    public interface Callback {
-        void onPageStarted();
-
-        void onProgressChanged(int newProgress);
-
-        void onPageFinished();
     }
 
     private class Client extends WebViewClient {
