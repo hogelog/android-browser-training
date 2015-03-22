@@ -9,7 +9,7 @@ import javax.inject.Singleton;
 
 @Singleton
 public class BrowserDatabaseHelper extends SQLiteOpenHelper {
-    private static final String DB_NAME = "browser";
+    private static final String DB_NAME = "browser.db";
     private static final int DB_VERSION = 1;
 
     private static final String[] DB_CREATE_QUERIES = {
