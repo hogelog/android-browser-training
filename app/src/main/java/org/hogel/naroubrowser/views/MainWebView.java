@@ -43,6 +43,8 @@ public class MainWebView extends WebView {
 
     private @Nullable Callback callback;
 
+    private boolean disableJavascript = false;
+
     public MainWebView(Context context) {
         super(context);
         setup(context);
@@ -80,6 +82,7 @@ public class MainWebView extends WebView {
         BrowserApplication.component(context).inject(this);
         WebSettings webSettings = getSettings();
         webSettings.setJavaScriptEnabled(true);
+        webSettings.setAppCacheEnabled(true);
         setWebViewClient(new Client());
         setWebChromeClient(new ChromeClient());
     }
@@ -103,6 +106,10 @@ public class MainWebView extends WebView {
             if (callback != null) {
                 callback.onPageStarted();
             }
+            if (UrlConst.PATTERN_URL_DISABLE_JS.matcher(url).find()) {
+                getSettings().setJavaScriptEnabled(false);
+                disableJavascript = true;
+            }
         }
 
         @Override
@@ -114,6 +121,10 @@ public class MainWebView extends WebView {
 
             if (!visitedUrlDao.isExist(url)) {
                 visitedUrlDao.create(url, getTitle());
+            }
+            if (disableJavascript) {
+                getSettings().setJavaScriptEnabled(true);
+                disableJavascript = false;
             }
         }
     }
