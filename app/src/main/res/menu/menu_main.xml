@@ -1,6 +1,5 @@
 <menu
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         tools:context="org.hogel.naroubrowser.MainActivity"
         >
@@ -8,19 +7,19 @@
             android:id="@+id/action_bookmark"
             android:title="@string/action_bookmark"
             android:icon="@drawable/ic_action_important"
-            app:showAsAction="ifRoom"
+            android:showAsAction="ifRoom"
             />
 
     <item
             android:id="@+id/action_reload"
             android:title="@string/action_reload"
             android:icon="@drawable/ic_action_refresh"
-            app:showAsAction="ifRoom"
+            android:showAsAction="ifRoom"
             />
 
     <item
             android:id="@+id/action_ranking"
             android:title="@string/action_ranking"
-            app:showAsAction="never"
+            android:showAsAction="never"
             />
 </menu>

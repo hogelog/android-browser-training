@@ -1,8 +1,8 @@
 package org.hogel.naroubrowser.activities;
 
+import android.app.ActionBar;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -93,7 +93,8 @@ public class MainActivity extends AbstractActivity {
             }
         });
 
-        actionBar = getSupportActionBar();
+//        actionBar = getSupportActionBar();
+        actionBar = getActionBar();
     }
 
     @Override
@@ -112,9 +113,7 @@ public class MainActivity extends AbstractActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
-            return true;
-        } else if (id == R.id.action_bookmark) {
+        if (id == R.id.action_bookmark) {
             mainWebview.loadUrl(UrlConst.URL_LAUNCH);
             return true;
         } else if (id == R.id.action_reload) {
