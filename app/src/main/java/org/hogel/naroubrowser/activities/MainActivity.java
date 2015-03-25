@@ -93,7 +93,6 @@ public class MainActivity extends AbstractActivity {
             }
         });
 
-//        actionBar = getSupportActionBar();
         actionBar = getActionBar();
     }
 
