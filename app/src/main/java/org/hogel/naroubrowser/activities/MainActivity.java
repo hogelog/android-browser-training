@@ -12,6 +12,8 @@ import org.hogel.naroubrowser.R;
 import org.hogel.naroubrowser.consts.UrlConst;
 import org.hogel.naroubrowser.services.AnalyticsService;
 import org.hogel.naroubrowser.views.MainWebView;
+import rx.Subscriber;
+import rx.functions.Action1;
 
 import javax.inject.Inject;
 
@@ -54,30 +56,9 @@ public class MainActivity extends AbstractActivity {
         Resources resources = getResources();
         actionBarScrollThreshold = resources.getDimensionPixelSize(R.dimen.action_bar_scroll_threshold);
 
-        mainWebview.setCallback(new MainWebView.Callback() {
+        mainWebview.listenScrollY(new Action1<Integer>() {
             @Override
-            public void onPageStarted() {
-                progressBar.setProgress(0);
-                progressBar.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onPageFinished() {
-                progressBar.setProgress(100);
-                progressBar.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onProgressChanged(int progress) {
-                progressBar.setProgress(progress);
-            }
-
-            @Override
-            public void onScrollX(int X) {
-            }
-
-            @Override
-            public void onScrollY(int y) {
+            public void call(Integer y) {
                 if (scrolling > 0 && y > 0) {
                     scrolling += y;
                 } else if (scrolling < 0 && y < 0) {
@@ -90,6 +71,23 @@ public class MainActivity extends AbstractActivity {
                 } else if (scrolling < -actionBarScrollThreshold) {
                     actionBar.show();
                 }
+            }
+        });
+        mainWebview.listenPage(new Subscriber<Integer>() {
+            @Override
+            public void onNext(Integer progress) {
+                progressBar.setProgress(progress);
+                if (progress == 0) {
+                    progressBar.setVisibility(View.VISIBLE);
+                }
+            }
+            @Override
+            public void onCompleted() {
+                progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onError(Throwable e) {
             }
         });
 

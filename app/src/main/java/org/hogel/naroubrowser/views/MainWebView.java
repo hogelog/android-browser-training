@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
@@ -17,31 +16,26 @@ import org.hogel.naroubrowser.BrowserApplication;
 import org.hogel.naroubrowser.R;
 import org.hogel.naroubrowser.consts.UrlConst;
 import org.hogel.naroubrowser.db.dao.VisitedUrlDao;
+import org.hogel.naroubrowser.rx.EventHandler;
 import org.hogel.naroubrowser.services.AnalyticsService;
+import rx.Subscriber;
+import rx.functions.Action1;
 
 import javax.inject.Inject;
 
 public class MainWebView extends WebView {
 
-    public interface Callback {
-        void onPageStarted();
+    private final EventHandler<Integer> scrollXHandler = new EventHandler<>();
 
-        void onProgressChanged(int newProgress);
+    private final EventHandler<Integer> scrollYHandler = new EventHandler<>();
 
-        void onPageFinished();
-
-        void onScrollX(int X);
-
-        void onScrollY(int y);
-    }
+    private final EventHandler<Integer> pageHandler = new EventHandler<>();
 
     @Inject
     AnalyticsService analyticsService;
 
     @Inject
     VisitedUrlDao visitedUrlDao;
-
-    private @Nullable Callback callback;
 
     private boolean disableJavascript = false;
 
@@ -55,27 +49,11 @@ public class MainWebView extends WebView {
         setup(context);
     }
 
-    public void setCallback(Callback callback) {
-        this.callback = callback;
-    }
-
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
-        if (callback == null) {
-            return;
-        }
-        if (l != oldl) {
-            callback.onScrollX(l - oldl);
-        }
-        if (t != oldt) {
-            callback.onScrollY(t - oldt);
-        }
-    }
-
-    @Override
-    protected void onOverScrolled(int scrollX, int scrollY, boolean clampedX, boolean clampedY) {
-        super.onOverScrolled(scrollX, scrollY, clampedX, clampedY);
+        scrollYHandler.onNext(l - oldl);
+        scrollYHandler.onNext(t - oldt);
     }
 
     private void setup(Context context) {
@@ -103,9 +81,7 @@ public class MainWebView extends WebView {
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             super.onPageStarted(view, url, favicon);
-            if (callback != null) {
-                callback.onPageStarted();
-            }
+            pageHandler.onNext(0);
             if (UrlConst.PATTERN_URL_DISABLE_JS.matcher(url).find()) {
                 getSettings().setJavaScriptEnabled(false);
                 disableJavascript = true;
@@ -115,9 +91,8 @@ public class MainWebView extends WebView {
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-            if (callback != null) {
-                callback.onPageFinished();
-            }
+            pageHandler.onNext(100);
+            pageHandler.onCompleted();
 
             if (!visitedUrlDao.isExist(url)) {
                 visitedUrlDao.create(url, getTitle());
@@ -133,9 +108,7 @@ public class MainWebView extends WebView {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
             super.onProgressChanged(view, newProgress);
-            if (callback != null) {
-                callback.onProgressChanged(newProgress);
-            }
+            pageHandler.onNext(newProgress);
         }
 
         @Override
@@ -160,5 +133,17 @@ public class MainWebView extends WebView {
 
             return true;
         }
+    }
+
+    public void listenScrollX(Action1<Integer> action) {
+        scrollXHandler.subscribe(action);
+    }
+
+    public void listenScrollY(Action1<Integer> action) {
+        scrollYHandler.subscribe(action);
+    }
+
+    public void listenPage(Subscriber<Integer> subscriber) {
+        pageHandler.subscribe(subscriber);
     }
 }
