@@ -12,7 +12,6 @@ import org.hogel.naroubrowser.R;
 import org.hogel.naroubrowser.consts.UrlConst;
 import org.hogel.naroubrowser.services.AnalyticsService;
 import org.hogel.naroubrowser.views.MainWebView;
-import rx.Subscriber;
 import rx.functions.Action1;
 
 import javax.inject.Inject;
@@ -73,21 +72,15 @@ public class MainActivity extends AbstractActivity {
                 }
             }
         });
-        mainWebview.listenPage(new Subscriber<Integer>() {
+        mainWebview.listenPage(new Action1<Integer>() {
             @Override
-            public void onNext(Integer progress) {
+            public void call(Integer progress) {
                 progressBar.setProgress(progress);
                 if (progress == 0) {
                     progressBar.setVisibility(View.VISIBLE);
+                } else if (progress == 100) {
+                    progressBar.setVisibility(View.GONE);
                 }
-            }
-            @Override
-            public void onCompleted() {
-                progressBar.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onError(Throwable e) {
             }
         });
 

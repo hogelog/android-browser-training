@@ -16,20 +16,21 @@ import org.hogel.naroubrowser.BrowserApplication;
 import org.hogel.naroubrowser.R;
 import org.hogel.naroubrowser.consts.UrlConst;
 import org.hogel.naroubrowser.db.dao.VisitedUrlDao;
-import org.hogel.naroubrowser.rx.EventHandler;
 import org.hogel.naroubrowser.services.AnalyticsService;
 import rx.Subscriber;
 import rx.functions.Action1;
+import rx.subjects.PublishSubject;
+import rx.subjects.Subject;
 
 import javax.inject.Inject;
 
 public class MainWebView extends WebView {
 
-    private final EventHandler<Integer> scrollXHandler = new EventHandler<>();
+    private final Subject<Integer, Integer> scrollXSubject = PublishSubject.create();
 
-    private final EventHandler<Integer> scrollYHandler = new EventHandler<>();
+    private final Subject<Integer, Integer> scrollYSubject = PublishSubject.create();
 
-    private final EventHandler<Integer> pageHandler = new EventHandler<>();
+    private final Subject<Integer, Integer> pageSubject = PublishSubject.create();
 
     @Inject
     AnalyticsService analyticsService;
@@ -52,8 +53,8 @@ public class MainWebView extends WebView {
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
-        scrollYHandler.onNext(l - oldl);
-        scrollYHandler.onNext(t - oldt);
+        scrollXSubject.onNext(l - oldl);
+        scrollYSubject.onNext(t - oldt);
     }
 
     private void setup(Context context) {
@@ -81,7 +82,7 @@ public class MainWebView extends WebView {
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             super.onPageStarted(view, url, favicon);
-            pageHandler.onNext(0);
+            pageSubject.onNext(0);
             if (UrlConst.PATTERN_URL_DISABLE_JS.matcher(url).find()) {
                 getSettings().setJavaScriptEnabled(false);
                 disableJavascript = true;
@@ -91,8 +92,7 @@ public class MainWebView extends WebView {
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-            pageHandler.onNext(100);
-            pageHandler.onCompleted();
+            pageSubject.onNext(100);
 
             if (!visitedUrlDao.isExist(url)) {
                 visitedUrlDao.create(url, getTitle());
@@ -108,7 +108,7 @@ public class MainWebView extends WebView {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
             super.onProgressChanged(view, newProgress);
-            pageHandler.onNext(newProgress);
+            pageSubject.onNext(newProgress);
         }
 
         @Override
@@ -136,14 +136,14 @@ public class MainWebView extends WebView {
     }
 
     public void listenScrollX(Action1<Integer> action) {
-        scrollXHandler.subscribe(action);
+        scrollXSubject.subscribe(action);
     }
 
     public void listenScrollY(Action1<Integer> action) {
-        scrollYHandler.subscribe(action);
+        scrollYSubject.subscribe(action);
     }
 
-    public void listenPage(Subscriber<Integer> subscriber) {
-        pageHandler.subscribe(subscriber);
+    public void listenPage(Action1<Integer> action) {
+        pageSubject.subscribe(action);
     }
 }
