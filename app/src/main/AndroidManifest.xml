@@ -17,6 +17,7 @@
         <activity
                 android:name="org.hogel.naroubrowser.activities.MainActivity"
                 android:label="@string/app_name"
+                android:launchMode="singleInstance"
                 >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -17,7 +17,6 @@ import org.hogel.naroubrowser.R;
 import org.hogel.naroubrowser.consts.UrlConst;
 import org.hogel.naroubrowser.db.dao.VisitedUrlDao;
 import org.hogel.naroubrowser.services.AnalyticsService;
-import rx.Subscriber;
 import rx.functions.Action1;
 import rx.subjects.PublishSubject;
 import rx.subjects.Subject;
