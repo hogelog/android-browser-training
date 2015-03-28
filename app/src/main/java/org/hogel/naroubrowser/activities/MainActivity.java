@@ -3,6 +3,7 @@ package org.hogel.naroubrowser.activities;
 import android.app.ActionBar;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ProgressBar;
 import butterknife.InjectView;
 import org.hogel.naroubrowser.R;
 import org.hogel.naroubrowser.consts.UrlConst;
+import org.hogel.naroubrowser.db.dao.VisitedUrlDao;
 import org.hogel.naroubrowser.services.AnalyticsService;
 import org.hogel.naroubrowser.views.MainWebView;
 import rx.functions.Action1;
@@ -21,6 +23,9 @@ public class MainActivity extends AbstractActivity {
 
     @Inject
     AnalyticsService analyticsService;
+
+    @Inject
+    VisitedUrlDao visitedUrlDao;
 
     @InjectView(R.id.main_webview)
     MainWebView mainWebview;
@@ -71,8 +76,7 @@ public class MainActivity extends AbstractActivity {
                     actionBar.show();
                 }
             }
-        });
-        mainWebview.listenPage(new Action1<Integer>() {
+        }).listenProgress(new Action1<Integer>() {
             @Override
             public void call(Integer progress) {
                 progressBar.setProgress(progress);
@@ -80,6 +84,13 @@ public class MainActivity extends AbstractActivity {
                     progressBar.setVisibility(View.VISIBLE);
                 } else if (progress == 100) {
                     progressBar.setVisibility(View.GONE);
+                }
+            }
+        }).listenVisitPage(new Action1<Pair<String, String>>() {
+            @Override
+            public void call(Pair<String, String> visitPage) {
+                if (!visitedUrlDao.isExist(visitPage.first)) {
+                    visitedUrlDao.create(visitPage.first, visitPage.second);
                 }
             }
         });

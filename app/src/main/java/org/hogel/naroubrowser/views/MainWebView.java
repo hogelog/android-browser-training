@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.AttributeSet;
+import android.util.Pair;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -15,7 +16,6 @@ import android.webkit.WebViewClient;
 import org.hogel.naroubrowser.BrowserApplication;
 import org.hogel.naroubrowser.R;
 import org.hogel.naroubrowser.consts.UrlConst;
-import org.hogel.naroubrowser.db.dao.VisitedUrlDao;
 import org.hogel.naroubrowser.services.AnalyticsService;
 import rx.functions.Action1;
 import rx.subjects.PublishSubject;
@@ -29,13 +29,12 @@ public class MainWebView extends WebView {
 
     private final Subject<Integer, Integer> scrollYSubject = PublishSubject.create();
 
-    private final Subject<Integer, Integer> pageSubject = PublishSubject.create();
+    private final Subject<Integer, Integer> progressSubject = PublishSubject.create();
+
+    private final Subject<Pair<String, String>, Pair<String, String>> visitPageSubject = PublishSubject.create();
 
     @Inject
     AnalyticsService analyticsService;
-
-    @Inject
-    VisitedUrlDao visitedUrlDao;
 
     private boolean disableJavascript = false;
 
@@ -81,7 +80,7 @@ public class MainWebView extends WebView {
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             super.onPageStarted(view, url, favicon);
-            pageSubject.onNext(0);
+            progressSubject.onNext(0);
             if (UrlConst.PATTERN_URL_DISABLE_JS.matcher(url).find()) {
                 getSettings().setJavaScriptEnabled(false);
                 disableJavascript = true;
@@ -91,11 +90,8 @@ public class MainWebView extends WebView {
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-            pageSubject.onNext(100);
-
-            if (!visitedUrlDao.isExist(url)) {
-                visitedUrlDao.create(url, getTitle());
-            }
+            progressSubject.onNext(100);
+            visitPageSubject.onNext(Pair.create(url, getTitle()));
             if (disableJavascript) {
                 getSettings().setJavaScriptEnabled(true);
                 disableJavascript = false;
@@ -107,7 +103,7 @@ public class MainWebView extends WebView {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
             super.onProgressChanged(view, newProgress);
-            pageSubject.onNext(newProgress);
+            progressSubject.onNext(newProgress);
         }
 
         @Override
@@ -134,15 +130,23 @@ public class MainWebView extends WebView {
         }
     }
 
-    public void listenScrollX(Action1<Integer> action) {
+    public MainWebView listenScrollX(Action1<Integer> action) {
         scrollXSubject.subscribe(action);
+        return this;
     }
 
-    public void listenScrollY(Action1<Integer> action) {
+    public MainWebView listenScrollY(Action1<Integer> action) {
         scrollYSubject.subscribe(action);
+        return this;
     }
 
-    public void listenPage(Action1<Integer> action) {
-        pageSubject.subscribe(action);
+    public MainWebView listenProgress(Action1<Integer> action) {
+        progressSubject.subscribe(action);
+        return this;
+    }
+
+    public MainWebView listenVisitPage(Action1<Pair<String, String>> action) {
+        visitPageSubject.subscribe(action);
+        return this;
     }
 }
