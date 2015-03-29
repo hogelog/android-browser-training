@@ -88,6 +88,7 @@ public class MainActivity extends AbstractActivity {
                     progressBar.setVisibility(View.VISIBLE);
                 } else if (progress == 100) {
                     progressBar.setVisibility(View.GONE);
+                    swipeRefreshLayout.setRefreshing(false);
                 }
             }
         }).listenVisitPage(new Action1<Pair<String, String>>() {
@@ -102,7 +103,6 @@ public class MainActivity extends AbstractActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                swipeRefreshLayout.setRefreshing(false);
                 mainWebview.reload();
             }
         });
