@@ -3,6 +3,7 @@ package org.hogel.naroubrowser.activities;
 import android.app.ActionBar;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,6 +33,9 @@ public class MainActivity extends AbstractActivity {
 
     @InjectView(R.id.progress_bar)
     ProgressBar progressBar;
+
+    @InjectView(R.id.swipe_layout)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     private ActionBar actionBar;
 
@@ -92,6 +96,14 @@ public class MainActivity extends AbstractActivity {
                 if (!visitedUrlDao.isExist(visitPage.first)) {
                     visitedUrlDao.create(visitPage.first, visitPage.second);
                 }
+            }
+        });
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(false);
+                mainWebview.reload();
             }
         });
 

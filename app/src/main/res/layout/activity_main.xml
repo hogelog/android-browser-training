@@ -6,11 +6,17 @@
         tools:context="org.hogel.naroubrowser.MainActivity"
         >
 
-    <org.hogel.naroubrowser.views.MainWebView
-            android:id="@+id/main_webview"
+    <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            />
+            >
+            <org.hogel.naroubrowser.views.MainWebView
+                    android:id="@+id/main_webview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <ProgressBar
             android:id="@+id/progress_bar"
