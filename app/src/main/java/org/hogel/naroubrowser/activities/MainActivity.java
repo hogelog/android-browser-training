@@ -94,8 +94,10 @@ public class MainActivity extends AbstractActivity {
         }).listenVisitPage(new Action1<Pair<String, String>>() {
             @Override
             public void call(Pair<String, String> visitPage) {
-                if (!visitedUrlDao.isExist(visitPage.first)) {
-                    visitedUrlDao.create(visitPage.first, visitPage.second);
+                String url = visitPage.first;
+                String title = visitPage.second;
+                if (!visitedUrlDao.isExist(url)) {
+                    visitedUrlDao.create(url, title);
                 }
             }
         });
