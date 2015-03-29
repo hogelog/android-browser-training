@@ -20,10 +20,10 @@
 
     <ProgressBar
             android:id="@+id/progress_bar"
-            style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"
+            style="@style/ProgressBar.Horizontal"
             android:layout_alignParentTop="true"
             android:layout_width="match_parent"
-            android:layout_height="8dp"
+            android:layout_height="2dp"
             android:visibility="gone"
             />
 
