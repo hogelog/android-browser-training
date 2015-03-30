@@ -19,7 +19,6 @@ public class VisitedUrlDao {
     }
 
     public boolean isExist(String url) {
-        Integer result = databaseService.query(Integer.class, "SELECT 1 FROM visited_urls WHERE url = ? LIMIT 1;", url);
-        return result != null;
+        return databaseService.isExists("SELECT 1 FROM visited_urls WHERE url = ? LIMIT 1;", url);
     }
 }

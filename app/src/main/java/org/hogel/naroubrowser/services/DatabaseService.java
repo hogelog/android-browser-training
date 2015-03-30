@@ -34,14 +34,19 @@ public class DatabaseService {
         }
     }
 
+    public boolean isExists(String sql, String... values) {
+        Object result = query(Object.class, sql, values);
+        return result != null;
+    }
+
     private Object getValue(Cursor cursor, int columnIndex) {
         switch (cursor.getType(columnIndex)) {
             case Cursor.FIELD_TYPE_NULL:
                 return null;
             case Cursor.FIELD_TYPE_INTEGER:
-                return cursor.getInt(columnIndex);
+                return cursor.getLong(columnIndex);
             case Cursor.FIELD_TYPE_FLOAT:
-                return cursor.getFloat(columnIndex);
+                return cursor.getDouble(columnIndex);
             case Cursor.FIELD_TYPE_STRING:
                 return cursor.getString(columnIndex);
             case Cursor.FIELD_TYPE_BLOB:
