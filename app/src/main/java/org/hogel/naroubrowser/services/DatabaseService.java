@@ -1,8 +1,10 @@
 package org.hogel.naroubrowser.services;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import org.hogel.naroubrowser.db.BrowserDatabaseHelper;
+import org.hogel.naroubrowser.db.FlywayHelper;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -11,6 +13,9 @@ import javax.inject.Singleton;
 public class DatabaseService {
     @Inject
     BrowserDatabaseHelper databaseHelper;
+
+    @Inject
+    Context context;
 
     @Inject
     public DatabaseService() {
@@ -53,5 +58,11 @@ public class DatabaseService {
                 return cursor.getBlob(columnIndex);
         }
         throw new IllegalStateException("Unknown sqlite type: " + cursor.getType(columnIndex));
+    }
+
+    public void migrate() {
+        try (SQLiteDatabase database = databaseHelper.getWritableDatabase()) {
+            FlywayHelper.migrate(context, database);
+        }
     }
 }

@@ -12,14 +12,6 @@ public class BrowserDatabaseHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "browser.db";
     private static final int DB_VERSION = 1;
 
-    private static final String[] DB_CREATE_QUERIES = {
-        "CREATE TABLE visited_urls (" +
-            "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            "url TEXT, " +
-            "title TEXT" +
-            ")",
-    };
-
     @Inject
     public BrowserDatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -27,9 +19,6 @@ public class BrowserDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        for (String dbCreateQuery : DB_CREATE_QUERIES) {
-            db.execSQL(dbCreateQuery);
-        }
     }
 
     @Override

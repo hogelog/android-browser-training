@@ -22,12 +22,11 @@ public class BrowserApplication extends Application {
             WebView.setWebContentsDebuggingEnabled(true);
         }
 
-        buildComponentAndInject();
         StethoService.initialize(this);
-    }
 
-    public void buildComponentAndInject() {
         component = BrowserComponent.Initializer.init(this);
+
+        component.getDatabaseService().migrate();
     }
 
     public static BrowserComponent component(Context context) {
