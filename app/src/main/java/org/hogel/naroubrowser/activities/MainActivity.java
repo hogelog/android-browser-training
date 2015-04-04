@@ -78,6 +78,8 @@ public class MainActivity extends AbstractActivity {
                     actionBar.hide();
                 } else if (scrolling < -actionBarScrollThreshold) {
                     actionBar.show();
+                } else if (mainWebview.getScrollY() == 0) {
+                    actionBar.show();
                 }
             }
         }).listenProgress(new Action1<Integer>() {
