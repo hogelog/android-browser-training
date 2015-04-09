@@ -1,9 +1,11 @@
 package org.hogel.naroubrowser.activities;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,6 +23,8 @@ import javax.inject.Inject;
 
 
 public class MainActivity extends AbstractActivity {
+
+    private static final String EXTRA_URL = "extra_url";
 
     @Inject
     AnalyticsService analyticsService;
@@ -53,11 +57,22 @@ public class MainActivity extends AbstractActivity {
 
         setup();
 
-        if (savedInstanceState == null) {
-            mainWebview.loadUrl(UrlConst.URL_LAUNCH);
-        } else {
+        if (savedInstanceState != null) {
             mainWebview.restoreState(savedInstanceState);
+        } else {
+            String url = getIntent().getDataString();
+            if (TextUtils.isEmpty(url)) {
+                mainWebview.loadUrl(UrlConst.URL_LAUNCH);
+            } else {
+                mainWebview.loadUrl(url);
+            }
         }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        mainWebview.loadUrl(intent.getDataString());
     }
 
     private void setup() {
