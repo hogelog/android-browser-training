@@ -16,7 +16,7 @@ public interface BrowserComponent {
 
     final class Initializer {
         public static BrowserComponent init(BrowserApplication application) {
-            return Dagger_BrowserComponent
+            return DaggerBrowserComponent
                 .builder()
                 .browserModule(new BrowserModule(application))
                 .build();
