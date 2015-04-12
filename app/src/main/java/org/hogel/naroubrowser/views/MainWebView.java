@@ -38,6 +38,8 @@ public class MainWebView extends WebView {
 
     private boolean disableJavascript = false;
 
+    private boolean pageLoading = false;
+
     public MainWebView(Context context) {
         super(context);
         setup(context);
@@ -51,6 +53,9 @@ public class MainWebView extends WebView {
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
+        if (pageLoading) {
+            return;
+        }
         scrollXSubject.onNext(l - oldl);
         scrollYSubject.onNext(t - oldt);
     }
@@ -85,6 +90,7 @@ public class MainWebView extends WebView {
                 getSettings().setJavaScriptEnabled(false);
                 disableJavascript = true;
             }
+            pageLoading = true;
         }
 
         @Override
@@ -96,6 +102,7 @@ public class MainWebView extends WebView {
                 getSettings().setJavaScriptEnabled(true);
                 disableJavascript = false;
             }
+            pageLoading = false;
         }
     }
 
