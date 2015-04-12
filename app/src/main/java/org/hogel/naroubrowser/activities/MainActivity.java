@@ -1,10 +1,10 @@
 package org.hogel.naroubrowser.activities;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
 import android.util.Pair;
 import android.view.Menu;
@@ -126,7 +126,7 @@ public class MainActivity extends AbstractActivity {
             }
         });
 
-        actionBar = getActionBar();
+        actionBar = getSupportActionBar();
     }
 
     @Override
@@ -153,6 +153,9 @@ public class MainActivity extends AbstractActivity {
             return true;
         } else if (id == R.id.action_ranking) {
             mainWebview.loadUrl(UrlConst.URL_RANKING);
+            return true;
+        } else if (id == R.id.action_about) {
+            startActivity(AboutActivity.createIntent(this));
             return true;
         }
 

@@ -1,7 +1,9 @@
 package org.hogel.naroubrowser.di;
 
+import android.content.res.AssetManager;
 import dagger.Component;
 import org.hogel.naroubrowser.BrowserApplication;
+import org.hogel.naroubrowser.activities.AboutActivity;
 import org.hogel.naroubrowser.activities.MainActivity;
 import org.hogel.naroubrowser.db.dao.VisitedUrlDao;
 import org.hogel.naroubrowser.services.AnalyticsService;
@@ -25,6 +27,8 @@ public interface BrowserComponent {
 
     void inject(MainActivity activity);
 
+    void inject(AboutActivity activity);
+
     void inject(MainWebView mainWebView);
 
     AnalyticsService getAnalyticsService();
@@ -32,4 +36,6 @@ public interface BrowserComponent {
     DatabaseService getDatabaseService();
 
     VisitedUrlDao getVisitedUrlDao();
+
+    AssetManager getAssetManager();
 }

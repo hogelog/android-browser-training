@@ -34,6 +34,9 @@
                 <data android:host="ncode.syosetu.com" />
             </intent-filter>
         </activity>
+        <activity
+                android:name="org.hogel.naroubrowser.activities.AboutActivity"
+                />
 
     </application>
 
