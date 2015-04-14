@@ -13,7 +13,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import org.hogel.naroubrowser.BrowserApplication;
+import com.google.inject.Injector;
 import org.hogel.naroubrowser.R;
 import org.hogel.naroubrowser.consts.UrlConst;
 import org.hogel.naroubrowser.services.AnalyticsService;
@@ -32,6 +32,9 @@ public class MainWebView extends WebView {
     private final Subject<Integer, Integer> progressSubject = PublishSubject.create();
 
     private final Subject<Pair<String, String>, Pair<String, String>> visitPageSubject = PublishSubject.create();
+
+    @Inject
+    Injector injector;
 
     @Inject
     AnalyticsService analyticsService;
@@ -61,7 +64,7 @@ public class MainWebView extends WebView {
     }
 
     private void setup(Context context) {
-        BrowserApplication.component(context).inject(this);
+        injector.injectMembers(this);
         WebSettings webSettings = getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setAppCacheEnabled(true);

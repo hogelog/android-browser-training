@@ -58,15 +58,15 @@ dependencies {
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'com.splunk.mint:mint:4.0.9'
     compile 'io.reactivex:rxandroid:0.24.0'
-    compile 'com.google.dagger:dagger:2.0'
     compile 'org.sqldroid:sqldroid:1.0.3'
     compile 'org.flywaydb:flyway-core:3.2.1'
     compile 'com.google.guava:guava:18.0'
+    compile 'org.roboguice:roboguice:3.0.1'
 
-    apt "com.google.dagger:dagger-compiler:2.0"
     apt "org.projectlombok:lombok:1.12.6"
 
-    provided 'javax.annotation:jsr250-api:1.0'
+    provided 'org.roboguice:roboblender:3.0.1'
+//    provided 'javax.annotation:jsr250-api:1.0'
     provided "org.projectlombok:lombok:1.12.6"
 
     debugCompile 'com.facebook.stetho:stetho:1.0.1'

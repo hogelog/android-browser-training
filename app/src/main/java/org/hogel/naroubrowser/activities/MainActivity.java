@@ -51,8 +51,6 @@ public class MainActivity extends AbstractActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        component().inject(this);
-
         setContentView(R.layout.activity_main);
 
         setup();

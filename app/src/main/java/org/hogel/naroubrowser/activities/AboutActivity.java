@@ -31,8 +31,6 @@ public class AboutActivity extends AbstractActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        component().inject(this);
-
         setContentView(R.layout.activity_about);
 
         setup();

@@ -1,14 +1,21 @@
 package org.hogel.naroubrowser;
 
 import android.app.Application;
-import android.content.Context;
 import android.webkit.WebView;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+import com.google.inject.Stage;
 import com.splunk.mint.Mint;
-import org.hogel.naroubrowser.di.BrowserComponent;
+import org.hogel.naroubrowser.di.BrowserModule;
+import org.hogel.naroubrowser.services.DatabaseService;
+import roboguice.RoboGuice;
 
 public class BrowserApplication extends Application {
 
-    private BrowserComponent component;
+    @Inject
+    DatabaseService databaseService;
+
+    private Injector injector;
 
     @Override
     public void onCreate() {
@@ -24,12 +31,9 @@ public class BrowserApplication extends Application {
 
         StethoService.initialize(this);
 
-        component = BrowserComponent.Initializer.init(this);
+        injector = RoboGuice.getOrCreateBaseApplicationInjector(this, Stage.PRODUCTION, new BrowserModule());
+        injector.injectMembers(this);
 
-        component.getDatabaseService().migrate();
-    }
-
-    public static BrowserComponent component(Context context) {
-        return ((BrowserApplication) context.getApplicationContext()).component;
+        databaseService.migrate();
     }
 }
