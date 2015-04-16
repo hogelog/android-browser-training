@@ -5,6 +5,7 @@ import android.content.Context;
 import android.webkit.WebView;
 import com.splunk.mint.Mint;
 import org.hogel.naroubrowser.di.BrowserComponent;
+import org.hogel.naroubrowser.services.StethoService;
 
 public class BrowserApplication extends Application {
 
