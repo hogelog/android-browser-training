@@ -13,15 +13,14 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import org.hogel.naroubrowser.BrowserApplication;
+import com.google.inject.Inject;
 import org.hogel.naroubrowser.R;
 import org.hogel.naroubrowser.consts.UrlConst;
 import org.hogel.naroubrowser.services.AnalyticsService;
+import roboguice.RoboGuice;
 import rx.functions.Action1;
 import rx.subjects.PublishSubject;
 import rx.subjects.Subject;
-
-import javax.inject.Inject;
 
 public class MainWebView extends WebView {
 
@@ -42,12 +41,12 @@ public class MainWebView extends WebView {
 
     public MainWebView(Context context) {
         super(context);
-        setup(context);
+        setup();
     }
 
     public MainWebView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setup(context);
+        setup();
     }
 
     @Override
@@ -60,8 +59,9 @@ public class MainWebView extends WebView {
         scrollYSubject.onNext(t - oldt);
     }
 
-    private void setup(Context context) {
-        BrowserApplication.component(context).inject(this);
+    private void setup() {
+        RoboGuice.injectMembers(getContext(), this);
+
         WebSettings webSettings = getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setAppCacheEnabled(true);

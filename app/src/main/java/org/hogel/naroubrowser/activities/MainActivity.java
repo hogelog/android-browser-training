@@ -11,23 +11,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
-import butterknife.InjectView;
+import com.google.inject.Inject;
 import org.hogel.naroubrowser.R;
 import org.hogel.naroubrowser.consts.UrlConst;
 import org.hogel.naroubrowser.db.dao.VisitedUrlDao;
-import org.hogel.naroubrowser.services.AnalyticsService;
 import org.hogel.naroubrowser.views.MainWebView;
+import roboguice.inject.InjectView;
 import rx.functions.Action1;
-
-import javax.inject.Inject;
 
 
 public class MainActivity extends AbstractActivity {
 
-    private static final String EXTRA_URL = "extra_url";
-
     @Inject
-    AnalyticsService analyticsService;
+    Resources resources;
 
     @Inject
     VisitedUrlDao visitedUrlDao;
@@ -50,8 +46,6 @@ public class MainActivity extends AbstractActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        component().inject(this);
 
         setContentView(R.layout.activity_main);
 
@@ -76,7 +70,6 @@ public class MainActivity extends AbstractActivity {
     }
 
     private void setup() {
-        Resources resources = getResources();
         actionBarScrollThreshold = resources.getDimensionPixelSize(R.dimen.action_bar_scroll_threshold);
 
         mainWebview.listenScrollY(new Action1<Integer>() {

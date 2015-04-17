@@ -1,52 +1,27 @@
 package org.hogel.naroubrowser.di;
 
-import android.app.Application;
 import android.content.Context;
-import android.content.res.AssetManager;
-import android.content.res.Resources;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
-import dagger.Module;
-import dagger.Provides;
+import com.google.inject.AbstractModule;
+import com.google.inject.Provides;
+import com.google.inject.Singleton;
 import org.hogel.naroubrowser.R;
 
-import javax.inject.Singleton;
-
-@Module
-public class BrowserModule {
-
-    private final Application application;
-
-    public BrowserModule(Application application) {
-        this.application = application;
-    }
-
-    @Provides
-    Context provideContext(){
-        return application;
+public class BrowserModule extends AbstractModule {
+    @Override
+    protected void configure() {
     }
 
     @Provides
     @Singleton
-    GoogleAnalytics provideGoogleAnalytics() {
-        return GoogleAnalytics.getInstance(application);
+    GoogleAnalytics provideGoogleAnalytics(Context context) {
+        return GoogleAnalytics.getInstance(context.getApplicationContext());
     }
 
     @Provides
     @Singleton
     Tracker provideTracker(GoogleAnalytics googleAnalytics) {
         return googleAnalytics.newTracker(R.xml.app_tracker);
-    }
-
-    @Provides
-    @Singleton
-    Resources provideResources() {
-        return application.getResources();
-    }
-
-    @Provides
-    @Singleton
-    AssetManager provideAssetManager(Resources resources) {
-        return resources.getAssets();
     }
 }

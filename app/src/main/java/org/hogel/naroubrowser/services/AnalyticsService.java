@@ -1,11 +1,9 @@
 package org.hogel.naroubrowser.services;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 @Singleton
 public class AnalyticsService {
@@ -18,9 +16,6 @@ public class AnalyticsService {
         URL,
         ;
     }
-
-    @Inject
-    GoogleAnalytics googleAnalytics;
 
     @Inject
     Tracker tracker;

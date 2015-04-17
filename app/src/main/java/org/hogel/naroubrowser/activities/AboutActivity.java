@@ -5,12 +5,12 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.webkit.WebView;
-import butterknife.InjectView;
 import com.google.common.base.Charsets;
 import com.google.common.io.CharStreams;
+import com.google.inject.Inject;
 import org.hogel.naroubrowser.R;
+import roboguice.inject.InjectView;
 
-import javax.inject.Inject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -30,8 +30,6 @@ public class AboutActivity extends AbstractActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        component().inject(this);
 
         setContentView(R.layout.activity_about);
 
