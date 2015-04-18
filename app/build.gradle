@@ -19,7 +19,7 @@ android {
         }
         release {
             buildConfigField "String", "MINT_API_KEY", "\"${project.property("mint_api_key")}\""
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
