@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'deploygate'
 
+def releaseSigningProperties = "${System.env["HOME"]}/.gradle/signing/release.properties"
+
 android {
     compileSdkVersion 22
     buildToolsVersion "22.0.0"
@@ -13,6 +15,19 @@ android {
         versionName "1.0.0"
     }
 
+    signingConfigs {
+        release {
+            if (new File(releaseSigningProperties).exists()) {
+                Properties props = new Properties()
+                props.load(new FileInputStream(file(releaseSigningProperties)))
+                storeFile file(props['STORE_FILE'])
+                storePassword props['STORE_PASSWORD']
+                keyAlias props['KEY_ALIAS']
+                keyPassword props['KEY_PASSWORD']
+            }
+        }
+    }
+
     buildTypes {
         debug {
             buildConfigField "String", "MINT_API_KEY", "\"${project.property("mint_api_key")}\""
@@ -21,6 +36,7 @@ android {
             buildConfigField "String", "MINT_API_KEY", "\"${project.property("mint_api_key")}\""
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
