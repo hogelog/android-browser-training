@@ -2,7 +2,9 @@ package org.hogel.naroubrowser;
 
 import android.app.Application;
 import android.webkit.WebView;
+import com.crashlytics.android.Crashlytics;
 import com.google.inject.Inject;
+import io.fabric.sdk.android.Fabric;
 import org.hogel.naroubrowser.di.Guices;
 import org.hogel.naroubrowser.services.DatabaseService;
 import org.hogel.naroubrowser.services.StethoService;
@@ -16,6 +18,8 @@ public class BrowserApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        Fabric.with(this, new Crashlytics());
 
         if (BuildConfig.DEBUG) {
             WebView.setWebContentsDebuggingEnabled(true);

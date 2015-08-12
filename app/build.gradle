@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'io.fabric'
 
 def releaseSigningProperties = "${System.env["HOME"]}/.gradle/signing/release.properties"
 
@@ -68,6 +69,10 @@ dependencies {
 
     provided "org.projectlombok:lombok:1.16.4"
 	apt "org.projectlombok:lombok:1.16.4"
+
+    compile('com.crashlytics.sdk.android:crashlytics:2.5.1@aar') {
+        transitive = true
+    }
 
     debugCompile 'com.facebook.stetho:stetho:1.1.1'
 }
