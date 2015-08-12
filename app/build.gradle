@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'deploygate'
 apply plugin: 'com.neenbedankt.android-apt'
 
 def releaseSigningProperties = "${System.env["HOME"]}/.gradle/signing/release.properties"
@@ -45,21 +44,6 @@ android {
 
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'
-    }
-}
-
-deploygate {
-    userName = "${project.property("deploygate_user")}"
-    token = "${project.property("deploygate_token")}"
-
-    apks {
-        release {
-            sourceFile = file("build/outputs/apk/app-release.apk")
-        }
-
-        debug {
-            sourceFile = file("build/outputs/apk/app-debug.apk")
-        }
     }
 }
 
