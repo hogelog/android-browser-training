@@ -30,10 +30,8 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField "String", "MINT_API_KEY", "\"${project.property("mint_api_key")}\""
         }
         release {
-            buildConfigField "String", "MINT_API_KEY", "\"${project.property("mint_api_key")}\""
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
@@ -70,10 +68,10 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.0.0'
     compile 'com.android.support:support-annotations:22.0.0'
     compile 'com.google.android.gms:play-services-base:6.5.87'
-    compile 'com.splunk.mint:mint:4.0.9'
     compile 'io.reactivex:rxandroid:0.24.0'
     compile 'org.sqldroid:sqldroid:1.0.3'
     compile 'org.flywaydb:flyway-core:3.2.1'
+
     compile 'com.google.guava:guava:18.0'
     compile 'org.roboguice:roboguice:3.0.1'
 
