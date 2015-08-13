@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Pair;
 import android.view.Menu;
@@ -27,6 +28,9 @@ public class MainActivity extends AbstractActivity {
 
     @Inject
     VisitedUrlDao visitedUrlDao;
+
+    @InjectView(R.id.toolbar)
+    Toolbar toolbar;
 
     @InjectView(R.id.main_webview)
     MainWebView mainWebview;
@@ -70,6 +74,8 @@ public class MainActivity extends AbstractActivity {
     }
 
     private void setup() {
+        setSupportActionBar(toolbar);
+
         actionBarScrollThreshold = resources.getDimensionPixelSize(R.dimen.action_bar_scroll_threshold);
 
         mainWebview.listenScrollY(new Action1<Integer>() {

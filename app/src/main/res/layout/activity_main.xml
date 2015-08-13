@@ -1,13 +1,23 @@
 <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent" android:layout_height="match_parent"
         tools:context="org.hogel.naroubrowser.MainActivity"
         >
 
+    <android.support.v7.widget.Toolbar
+            app:theme="@style/ToolbarStyle"
+            android:id="@+id/toolbar"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/action_bar_height"
+            android:background="?attr/colorPrimary"
+            />
+
     <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipe_layout"
+            android:layout_below="@id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             >
@@ -21,7 +31,7 @@
     <ProgressBar
             android:id="@+id/progress_bar"
             style="@style/ProgressBar.Horizontal"
-            android:layout_alignParentTop="true"
+            android:layout_below="@id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:visibility="gone"
