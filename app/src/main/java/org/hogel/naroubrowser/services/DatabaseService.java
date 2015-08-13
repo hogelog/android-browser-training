@@ -11,14 +11,14 @@ import org.hogel.naroubrowser.db.FlywayHelper;
 
 @Singleton
 public class DatabaseService {
-    @Inject
-    BrowserDatabaseHelper databaseHelper;
+    private final Context context;
+
+    private final BrowserDatabaseHelper databaseHelper;
 
     @Inject
-    Context context;
-
-    @Inject
-    public DatabaseService() {
+    public DatabaseService(Context context, BrowserDatabaseHelper databaseHelper) {
+        this.context = context;
+        this.databaseHelper = databaseHelper;
     }
 
     public void execute(String sql, String... values) {
