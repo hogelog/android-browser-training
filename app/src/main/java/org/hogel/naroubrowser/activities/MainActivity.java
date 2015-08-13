@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Pair;
@@ -40,8 +39,6 @@ public class MainActivity extends AbstractActivity {
 
     @InjectView(R.id.swipe_layout)
     SwipeRefreshLayout swipeRefreshLayout;
-
-    private ActionBar actionBar;
 
     private int actionBarScrollThreshold;
 
@@ -89,11 +86,11 @@ public class MainActivity extends AbstractActivity {
                     scrolling = y;
                 }
                 if (scrolling >= actionBarScrollThreshold) {
-                    actionBar.hide();
+                    toolbar.setVisibility(View.GONE);
                 } else if (scrolling < -actionBarScrollThreshold) {
-                    actionBar.show();
+                    toolbar.setVisibility(View.VISIBLE);
                 } else if (mainWebview.getScrollY() == 0) {
-                    actionBar.show();
+                    toolbar.setVisibility(View.VISIBLE);
                 }
             }
         }).listenProgress(new Action1<Integer>() {
@@ -124,8 +121,6 @@ public class MainActivity extends AbstractActivity {
                 mainWebview.reload();
             }
         });
-
-        actionBar = getSupportActionBar();
     }
 
     @Override
