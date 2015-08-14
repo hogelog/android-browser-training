@@ -40,8 +40,6 @@ public class MainActivity extends AbstractActivity {
     @InjectView(R.id.swipe_layout)
     SwipeRefreshLayout swipeRefreshLayout;
 
-    private int actionBarScrollThreshold;
-
     private int scrolling = 0;
 
     @Override
@@ -73,25 +71,22 @@ public class MainActivity extends AbstractActivity {
     private void setup() {
         setSupportActionBar(toolbar);
 
-        actionBarScrollThreshold = resources.getDimensionPixelSize(R.dimen.action_bar_scroll_threshold);
+        final int toolbarHeight = resources.getDimensionPixelSize(R.dimen.toolbar_height);
 
+        mainWebview.setY(toolbarHeight);
         mainWebview.listenScrollY(new Action1<Integer>() {
             @Override
             public void call(Integer y) {
-                if (scrolling > 0 && y > 0) {
-                    scrolling += y;
-                } else if (scrolling < 0 && y < 0) {
-                    scrolling += y;
-                } else {
-                    scrolling = y;
+                scrolling += y;
+                if (scrolling > toolbarHeight) {
+                    scrolling = toolbarHeight;
+                } else if (scrolling < 0) {
+                    scrolling = 0;
                 }
-                if (scrolling >= actionBarScrollThreshold) {
-                    toolbar.setVisibility(View.GONE);
-                } else if (scrolling < -actionBarScrollThreshold) {
-                    toolbar.setVisibility(View.VISIBLE);
-                } else if (mainWebview.getScrollY() == 0) {
-                    toolbar.setVisibility(View.VISIBLE);
-                }
+
+                toolbar.setTranslationY(-scrolling);
+                progressBar.setTranslationY(-scrolling);
+                mainWebview.setTranslationY(toolbarHeight - scrolling);
             }
         }).listenProgress(new Action1<Integer>() {
             @Override
