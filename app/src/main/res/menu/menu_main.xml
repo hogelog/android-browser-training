@@ -7,14 +7,14 @@
     <item
             android:id="@+id/action_bookmark"
             android:title="@string/action_bookmark"
-            android:icon="@drawable/ic_action_important"
+            android:icon="@drawable/ic_folder_24dp"
             app:showAsAction="ifRoom"
             />
 
     <item
             android:id="@+id/action_reload"
             android:title="@string/action_reload"
-            android:icon="@drawable/ic_action_refresh"
+            android:icon="@drawable/ic_cached_24dp"
             app:showAsAction="ifRoom"
             />
 
