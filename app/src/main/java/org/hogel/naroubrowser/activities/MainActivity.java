@@ -42,6 +42,8 @@ public class MainActivity extends AbstractActivity {
 
     private int scrolling = 0;
 
+    private int toolbarHeight;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +73,7 @@ public class MainActivity extends AbstractActivity {
     private void setup() {
         setSupportActionBar(toolbar);
 
-        final int toolbarHeight = resources.getDimensionPixelSize(R.dimen.toolbar_height);
+        toolbarHeight = resources.getDimensionPixelSize(R.dimen.toolbar_height);
 
         mainWebview.setY(toolbarHeight);
         mainWebview.listenScrollY(new Action1<Integer>() {
@@ -84,9 +86,7 @@ public class MainActivity extends AbstractActivity {
                     scrolling = 0;
                 }
 
-                toolbar.setTranslationY(-scrolling);
-                progressBar.setTranslationY(-scrolling);
-                mainWebview.setTranslationY(toolbarHeight - scrolling);
+                resizeToolbar();
             }
         }).listenProgress(new Action1<Integer>() {
             @Override
@@ -116,6 +116,19 @@ public class MainActivity extends AbstractActivity {
                 mainWebview.reload();
             }
         });
+    }
+
+    private void resizeToolbar() {
+        toolbar.setTranslationY(-scrolling);
+        progressBar.setTranslationY(-scrolling);
+
+        if (scrolling == 0) {
+            swipeRefreshLayout.setTranslationY(toolbarHeight);
+            mainWebview.setTranslationY(0);
+        } else {
+            swipeRefreshLayout.setTranslationY(0);
+            mainWebview.setTranslationY(toolbarHeight - scrolling);
+        }
     }
 
     @Override
