@@ -1,5 +1,12 @@
 package org.hogel.naroubrowser.activities;
 
+import com.google.inject.Inject;
+
+import org.hogel.naroubrowser.R;
+import org.hogel.naroubrowser.consts.UrlConst;
+import org.hogel.naroubrowser.db.dao.VisitedUrlDao;
+import org.hogel.naroubrowser.views.MainWebView;
+
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -11,11 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
-import com.google.inject.Inject;
-import org.hogel.naroubrowser.R;
-import org.hogel.naroubrowser.consts.UrlConst;
-import org.hogel.naroubrowser.db.dao.VisitedUrlDao;
-import org.hogel.naroubrowser.views.MainWebView;
+
 import roboguice.inject.InjectView;
 import rx.functions.Action1;
 
@@ -107,6 +110,8 @@ public class MainActivity extends AbstractActivity {
                 if (!visitedUrlDao.isExist(url)) {
                     visitedUrlDao.create(url, title);
                 }
+                scrolling = 0;
+                resizeToolbar();
             }
         });
 
