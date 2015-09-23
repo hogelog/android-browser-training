@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'io.fabric'
 
-def releaseSigningProperties = "${System.env["HOME"]}/.gradle/signing/release.properties"
+def releaseSigningProperties = "${System.env["HOME"]}/.gradle/signing/narou_browser.properties"
 
 android {
     compileSdkVersion 23
@@ -33,7 +33,7 @@ android {
         debug {
         }
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
