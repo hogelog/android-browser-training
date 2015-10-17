@@ -27,6 +27,9 @@
 -dontwarn org.flywaydb.core.**
 -dontwarn roboguice.**
 
+# retrolambda
+-dontwarn java.lang.invoke.*
+
 -keep public class * extends android.app.Activity
 -keep public class * extends android.app.Application
 -keep public class * extends android.app.Service

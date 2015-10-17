@@ -2,7 +2,6 @@ package org.hogel.naroubrowser.views;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -118,17 +117,11 @@ public class MainWebView extends WebView {
             new AlertDialog.Builder(getContext())
                 .setTitle(url)
                 .setMessage(message)
-                .setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        result.confirm();
-                    }
+                .setPositiveButton(R.string.dialog_ok, (dialog, which) -> {
+                    result.confirm();
                 })
-                .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        result.cancel();
-                    }
+                .setNegativeButton(R.string.dialog_cancel, (dialog, which) -> {
+                    result.cancel();
                 })
                 .create()
                 .show();

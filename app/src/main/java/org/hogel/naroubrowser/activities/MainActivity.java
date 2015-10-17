@@ -1,26 +1,21 @@
 package org.hogel.naroubrowser.activities;
 
-import com.google.inject.Inject;
-
-import org.hogel.naroubrowser.R;
-import org.hogel.naroubrowser.consts.UrlConst;
-import org.hogel.naroubrowser.db.dao.VisitedUrlDao;
-import org.hogel.naroubrowser.views.MainWebView;
-
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
-
+import com.google.inject.Inject;
+import org.hogel.naroubrowser.R;
+import org.hogel.naroubrowser.consts.UrlConst;
+import org.hogel.naroubrowser.db.dao.VisitedUrlDao;
+import org.hogel.naroubrowser.views.MainWebView;
 import roboguice.inject.InjectView;
-import rx.functions.Action1;
 
 
 public class MainActivity extends AbstractActivity {
@@ -79,48 +74,34 @@ public class MainActivity extends AbstractActivity {
         toolbarHeight = resources.getDimensionPixelSize(R.dimen.toolbar_height);
 
         mainWebview.setY(toolbarHeight);
-        mainWebview.listenScrollY(new Action1<Integer>() {
-            @Override
-            public void call(Integer y) {
-                scrolling += y;
-                if (scrolling > toolbarHeight) {
-                    scrolling = toolbarHeight;
-                } else if (scrolling < 0) {
-                    scrolling = 0;
-                }
-
-                resizeToolbar();
-            }
-        }).listenProgress(new Action1<Integer>() {
-            @Override
-            public void call(Integer progress) {
-                progressBar.setProgress(progress);
-                if (progress == 0) {
-                    progressBar.setVisibility(View.VISIBLE);
-                } else if (progress == 100) {
-                    progressBar.setVisibility(View.GONE);
-                    swipeRefreshLayout.setRefreshing(false);
-                }
-            }
-        }).listenVisitPage(new Action1<Pair<String, String>>() {
-            @Override
-            public void call(Pair<String, String> visitPage) {
-                String url = visitPage.first;
-                String title = visitPage.second;
-                if (!visitedUrlDao.isExist(url)) {
-                    visitedUrlDao.create(url, title);
-                }
+        mainWebview.listenScrollY(y -> {
+            scrolling += y;
+            if (scrolling > toolbarHeight) {
+                scrolling = toolbarHeight;
+            } else if (scrolling < 0) {
                 scrolling = 0;
-                resizeToolbar();
             }
+
+            resizeToolbar();
+        }).listenProgress(progress -> {
+            progressBar.setProgress(progress);
+            if (progress == 0) {
+                progressBar.setVisibility(View.VISIBLE);
+            } else if (progress == 100) {
+                progressBar.setVisibility(View.GONE);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        }).listenVisitPage(visitPage -> {
+            String url = visitPage.first;
+            String title = visitPage.second;
+            if (!visitedUrlDao.isExist(url)) {
+                visitedUrlDao.create(url, title);
+            }
+            scrolling = 0;
+            resizeToolbar();
         });
 
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mainWebview.reload();
-            }
-        });
+        swipeRefreshLayout.setOnRefreshListener(mainWebview::reload);
     }
 
     private void resizeToolbar() {
