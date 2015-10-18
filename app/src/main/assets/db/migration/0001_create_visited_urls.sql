@@ -1,4 +1,4 @@
-CREATE TABLE visited_urls (
+CREATE TABLE IF NOT EXISTS visited_urls (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     url TEXT,
     title TEXT NOT NULL,

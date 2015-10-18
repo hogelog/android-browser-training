@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.hogel.naroubrowser.db.BrowserDatabaseHelper;
-import org.hogel.naroubrowser.db.FlywayHelper;
 
 
 @Singleton
@@ -58,11 +57,5 @@ public class DatabaseService {
                 return cursor.getBlob(columnIndex);
         }
         throw new IllegalStateException("Unknown sqlite type: " + cursor.getType(columnIndex));
-    }
-
-    public void migrate() {
-        try (SQLiteDatabase database = databaseHelper.getWritableDatabase()) {
-            FlywayHelper.migrate(context, database);
-        }
     }
 }
