@@ -1,4 +1,4 @@
-package org.hogel.naroubrowser.db.entities;
+package org.hogel.naroubrowser.db.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
