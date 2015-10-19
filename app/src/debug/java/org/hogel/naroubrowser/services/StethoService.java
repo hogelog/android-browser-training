@@ -5,12 +5,6 @@ import org.hogel.naroubrowser.BrowserApplication;
 
 public class StethoService {
     public static void initialize(BrowserApplication app) {
-        Stetho.initialize(
-            Stetho
-                .newInitializerBuilder(app)
-                .enableDumpapp(Stetho.defaultDumperPluginsProvider(app))
-                .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(app))
-                .build()
-        );
+        Stetho.initializeWithDefaults(app);
     }
 }
