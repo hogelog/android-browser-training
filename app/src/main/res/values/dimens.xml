@@ -1,4 +1,3 @@
 <resources>
     <dimen name="toolbar_height">40dp</dimen>
-    <dimen name="progress_bar_height">2dp</dimen>
 </resources>
