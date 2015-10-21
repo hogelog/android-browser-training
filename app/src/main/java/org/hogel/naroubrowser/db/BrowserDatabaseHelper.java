@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import com.facebook.stetho.common.Utf8Charset;
+import com.google.common.base.Charsets;
 import com.google.common.io.CharStreams;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -51,7 +51,7 @@ public class BrowserDatabaseHelper extends SQLiteOpenHelper {
     }
 
     private void executeSql(SQLiteDatabase db, String path) throws IOException {
-        try (Reader reader = new InputStreamReader(assetManager.open(path, AssetManager.ACCESS_BUFFER), Utf8Charset.INSTANCE)) {
+        try (Reader reader = new InputStreamReader(assetManager.open(path, AssetManager.ACCESS_BUFFER), Charsets.UTF_8)) {
             String sql = CharStreams.toString(reader);
             db.execSQL(sql);
         }
