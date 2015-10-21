@@ -1,37 +1,41 @@
 -dontobfuscate
 -dontoptimize
--dontusemixedcaseclassnames
--dontskipnonpubliclibraryclasses
--dontpreverify
 -verbose
+-keepattributes SourceFile, LineNumberTable
+-keepparameternames
+
+-keep class org.hogel.naroubrowser.** {
+    *;
+}
 
 -dontwarn javax.annotation.**
 -dontwarn sun.misc.**
--dontwarn org.flywaydb.core.**
--dontwarn roboguice.**
 
-# retrolambda
--dontwarn java.lang.invoke.*
+## rxandroid
+-keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
+   long producerIndex;
+   long consumerIndex;
+}
 
--keep public class * extends android.app.Activity
--keep public class * extends android.app.Application
--keep public class * extends android.app.Service
--keep public class * extends android.content.BroadcastReceiver
--keep public class * extends android.content.ContentProvider
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
+   long producerNode;
+   long consumerNode;
+}
+
+## roboguice
+-dontwarn roboguice.activity.*Activity
+-dontwarn roboguice.fragment.*Fragment
+
+#-dontwarn roboguice.**
 -keep class com.google.inject.Binder
 -keepclassmembers class * {
     @com.google.inject.Inject <init>(...);
 }
-# There's no way to keep all @Observes methods, so use the On*Event convention to identify event handlers
--keepclassmembers class * {
-    void *(**On*Event);
-}
--keep public class * extends android.view.View {
-    public <init>(android.content.Context);
-    public <init>(android.content.Context, android.util.AttributeSet);
-    public <init>(android.content.Context, android.util.AttributeSet, int);
-    public void set*(...);
-}
 -keep public class roboguice.**
+-keep class AnnotationDatabaseImpl
 
--keep class org.hogel.naroubrowser.**
+## retrolambda
+-dontwarn java.lang.invoke.*
+
+## play-service-ads
+-dontwarn com.google.android.gms.internal.**
