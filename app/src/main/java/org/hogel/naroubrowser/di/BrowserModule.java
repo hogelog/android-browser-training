@@ -1,6 +1,7 @@
 package org.hogel.naroubrowser.di;
 
 import android.content.Context;
+import com.crashlytics.android.answers.Answers;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.google.inject.AbstractModule;
@@ -23,5 +24,10 @@ public class BrowserModule extends AbstractModule {
     @Singleton
     Tracker provideTracker(GoogleAnalytics googleAnalytics) {
         return googleAnalytics.newTracker(R.xml.app_tracker);
+    }
+
+    @Provides
+    Answers provideAnswers() {
+        return Answers.getInstance();
     }
 }

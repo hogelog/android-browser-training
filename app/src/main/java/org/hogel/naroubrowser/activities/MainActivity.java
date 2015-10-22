@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.google.inject.Inject;
 import org.hogel.naroubrowser.R;
 import org.hogel.naroubrowser.consts.UrlConst;
 import org.hogel.naroubrowser.db.dao.VisitedUrlDao;
+import org.hogel.naroubrowser.services.AnalyticsService;
 import org.hogel.naroubrowser.views.MainWebView;
 import roboguice.inject.InjectView;
 
@@ -25,6 +27,9 @@ public class MainActivity extends AbstractActivity {
 
     @Inject
     VisitedUrlDao visitedUrlDao;
+
+    @Inject
+    AnalyticsService analyticsService;
 
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
@@ -74,32 +79,10 @@ public class MainActivity extends AbstractActivity {
         toolbarHeight = resources.getDimensionPixelSize(R.dimen.toolbar_height);
 
         mainWebview.setY(toolbarHeight);
-        mainWebview.listenScrollY(y -> {
-            scrolling += y;
-            if (scrolling > toolbarHeight) {
-                scrolling = toolbarHeight;
-            } else if (scrolling < 0) {
-                scrolling = 0;
-            }
-
-            resizeToolbar();
-        }).listenProgress(progress -> {
-            progressBar.setProgress(progress);
-            if (progress == 0) {
-                progressBar.setVisibility(View.VISIBLE);
-            } else if (progress == 100) {
-                progressBar.setVisibility(View.GONE);
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        }).listenVisitPage(visitPage -> {
-            String url = visitPage.first;
-            String title = visitPage.second;
-            if (!visitedUrlDao.isExist(url)) {
-                visitedUrlDao.create(url, title);
-            }
-            scrolling = 0;
-            resizeToolbar();
-        });
+        mainWebview
+            .listenScrollY(this::onListenScrollY)
+            .listenProgress(this::onListenProgress)
+            .listenVisitPage(this::onListenVisitPage);
 
         swipeRefreshLayout.setOnRefreshListener(mainWebview::reload);
     }
@@ -134,15 +117,19 @@ public class MainActivity extends AbstractActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_bookmark) {
+            analyticsService.trackMainMenu("bookmark");
             mainWebview.loadUrl(UrlConst.URL_LAUNCH);
             return true;
         } else if (id == R.id.action_reload) {
+            analyticsService.trackMainMenu("reload");
             mainWebview.reload();
             return true;
         } else if (id == R.id.action_ranking) {
+            analyticsService.trackMainMenu("ranking");
             mainWebview.loadUrl(UrlConst.URL_RANKING);
             return true;
         } else if (id == R.id.action_about) {
+            analyticsService.trackMainMenu("about");
             startActivity(AboutActivity.createIntent(this));
             return true;
         }
@@ -157,5 +144,36 @@ public class MainActivity extends AbstractActivity {
             return;
         }
         super.onBackPressed();
+    }
+
+    private void onListenScrollY(int y) {
+        scrolling += y;
+        if (scrolling > toolbarHeight) {
+            scrolling = toolbarHeight;
+        } else if (scrolling < 0) {
+            scrolling = 0;
+        }
+
+        resizeToolbar();
+    }
+
+    private void onListenProgress(int progress) {
+        progressBar.setProgress(progress);
+        if (progress == 0) {
+            progressBar.setVisibility(View.VISIBLE);
+        } else if (progress == 100) {
+            progressBar.setVisibility(View.GONE);
+            swipeRefreshLayout.setRefreshing(false);
+        }
+    }
+
+    private void onListenVisitPage(Pair<String, String> visitPage) {
+        String url = visitPage.first;
+        String title = visitPage.second;
+        if (!visitedUrlDao.isExist(url)) {
+            visitedUrlDao.create(url, title);
+        }
+        scrolling = 0;
+        resizeToolbar();
     }
 }
