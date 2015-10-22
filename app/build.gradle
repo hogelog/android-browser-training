@@ -17,6 +17,7 @@ android {
         targetSdkVersion 23
         versionCode 1_000_000
         versionName "1.0.0"
+        resConfigs "ja"
     }
 
     signingConfigs {
@@ -35,9 +36,13 @@ android {
     buildTypes {
         debug {
             applicationIdSuffix ".debug"
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         release {
             minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }

@@ -31,6 +31,7 @@
 -keepclassmembers class * {
     @com.google.inject.Inject <init>(...);
 }
+-keep public class roboguice.**
 -keep class AnnotationDatabaseImpl
 
 ## retrolambda
