@@ -2,6 +2,7 @@
 -dontoptimize
 -verbose
 -keepattributes SourceFile, LineNumberTable
+
 -keepparameternames
 
 -keep class org.hogel.naroubrowser.** {
@@ -31,8 +32,8 @@
 -keepclassmembers class * {
     @com.google.inject.Inject <init>(...);
 }
--keep public class roboguice.**
 -keep class AnnotationDatabaseImpl
+-keep class * extends **.AnnotationDatabase
 
 ## retrolambda
 -dontwarn java.lang.invoke.*
