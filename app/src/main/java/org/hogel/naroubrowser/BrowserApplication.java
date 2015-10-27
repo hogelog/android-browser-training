@@ -5,8 +5,8 @@ import android.webkit.WebView;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import io.fabric.sdk.android.Fabric;
-import org.hogel.naroubrowser.di.Guices;
-import org.hogel.naroubrowser.services.StethoService;
+import org.hogel.naroubrowser.initializer.GuiceInitializer;
+import org.hogel.naroubrowser.initializer.StethoInitializer;
 
 public class BrowserApplication extends Application {
     @Override
@@ -19,7 +19,7 @@ public class BrowserApplication extends Application {
             WebView.setWebContentsDebuggingEnabled(true);
         }
 
-        StethoService.initialize(this);
-        Guices.initialize(this);
+        StethoInitializer.initialize(this);
+        GuiceInitializer.initialize(this);
     }
 }

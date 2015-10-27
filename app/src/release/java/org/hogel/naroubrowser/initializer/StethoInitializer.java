@@ -1,8 +1,8 @@
-package org.hogel.naroubrowser.services;
+package org.hogel.naroubrowser.initializer;
 
 import org.hogel.naroubrowser.BrowserApplication;
 
-public class StethoService {
+public class StethoInitializer {
     public static void initialize(BrowserApplication app) {
     }
 }

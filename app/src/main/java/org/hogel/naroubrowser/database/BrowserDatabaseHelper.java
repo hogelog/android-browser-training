@@ -1,4 +1,4 @@
-package org.hogel.naroubrowser.db;
+package org.hogel.naroubrowser.database;
 
 import android.content.Context;
 import android.content.res.AssetManager;

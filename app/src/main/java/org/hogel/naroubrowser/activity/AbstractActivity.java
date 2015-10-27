@@ -1,4 +1,4 @@
-package org.hogel.naroubrowser.activities;
+package org.hogel.naroubrowser.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

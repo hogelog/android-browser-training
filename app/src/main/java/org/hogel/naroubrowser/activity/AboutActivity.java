@@ -1,4 +1,4 @@
-package org.hogel.naroubrowser.activities;
+package org.hogel.naroubrowser.activity;
 
 import android.content.Context;
 import android.content.Intent;

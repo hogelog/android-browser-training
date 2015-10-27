@@ -11,7 +11,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             >
-        <org.hogel.naroubrowser.views.MainWebView
+        <org.hogel.naroubrowser.view.MainWebView
                 android:id="@+id/main_webview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

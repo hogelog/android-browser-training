@@ -1,11 +1,11 @@
-package org.hogel.naroubrowser.services;
+package org.hogel.naroubrowser.service;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import org.hogel.naroubrowser.db.BrowserDatabaseHelper;
+import org.hogel.naroubrowser.database.BrowserDatabaseHelper;
 
 
 @Singleton

@@ -1,8 +1,8 @@
-package org.hogel.naroubrowser.db.dao;
+package org.hogel.naroubrowser.database.dao;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import org.hogel.naroubrowser.services.DatabaseService;
+import org.hogel.naroubrowser.service.DatabaseService;
 
 @Singleton
 public class VisitedUrlDao {

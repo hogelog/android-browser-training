@@ -1,4 +1,4 @@
-package org.hogel.naroubrowser.views;
+package org.hogel.naroubrowser.view;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -14,8 +14,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import com.google.inject.Inject;
 import org.hogel.naroubrowser.R;
-import org.hogel.naroubrowser.consts.UrlConst;
-import org.hogel.naroubrowser.services.AnalyticsService;
+import org.hogel.naroubrowser.constant.UrlConstant;
+import org.hogel.naroubrowser.service.AnalyticsService;
 import roboguice.RoboGuice;
 import rx.functions.Action1;
 import rx.subjects.PublishSubject;
@@ -73,7 +73,7 @@ public class MainWebView extends WebView {
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             analyticsService.trackViewUrl(url);
 
-            if (UrlConst.PATTERN_URL_INSIDE.matcher(url).find()) {
+            if (UrlConstant.PATTERN_URL_INSIDE.matcher(url).find()) {
                 return false;
             }
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
@@ -85,7 +85,7 @@ public class MainWebView extends WebView {
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             super.onPageStarted(view, url, favicon);
             progressSubject.onNext(0);
-            if (UrlConst.PATTERN_URL_DISABLE_JS.matcher(url).find()) {
+            if (UrlConstant.PATTERN_URL_DISABLE_JS.matcher(url).find()) {
                 getSettings().setJavaScriptEnabled(false);
                 disableJavascript = true;
             }

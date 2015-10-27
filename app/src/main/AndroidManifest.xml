@@ -15,7 +15,7 @@
             android:name="org.hogel.naroubrowser.BrowserApplication"
             >
         <activity
-                android:name="org.hogel.naroubrowser.activities.MainActivity"
+                android:name="org.hogel.naroubrowser.activity.MainActivity"
                 android:label="@string/app_name"
                 android:launchMode="singleInstance"
                 >
@@ -35,7 +35,7 @@
             </intent-filter>
         </activity>
         <activity
-                android:name="org.hogel.naroubrowser.activities.AboutActivity"
+                android:name="org.hogel.naroubrowser.activity.AboutActivity"
                 />
 
     </application>

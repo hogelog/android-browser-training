@@ -1,4 +1,4 @@
-package org.hogel.naroubrowser.di;
+package org.hogel.naroubrowser;
 
 import android.content.Context;
 import com.crashlytics.android.answers.Answers;
@@ -7,7 +7,6 @@ import com.google.android.gms.analytics.Tracker;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
-import org.hogel.naroubrowser.R;
 
 public class BrowserModule extends AbstractModule {
     @Override

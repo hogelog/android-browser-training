@@ -1,4 +1,4 @@
-package org.hogel.naroubrowser.services;
+package org.hogel.naroubrowser.service;
 
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.ContentViewEvent;

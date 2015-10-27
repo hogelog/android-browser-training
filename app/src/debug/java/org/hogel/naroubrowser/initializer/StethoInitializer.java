@@ -1,9 +1,9 @@
-package org.hogel.naroubrowser.services;
+package org.hogel.naroubrowser.initializer;
 
 import com.facebook.stetho.Stetho;
 import org.hogel.naroubrowser.BrowserApplication;
 
-public class StethoService {
+public class StethoInitializer {
     public static void initialize(BrowserApplication app) {
         Stetho.initializeWithDefaults(app);
     }

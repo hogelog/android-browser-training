@@ -1,4 +1,4 @@
-package org.hogel.naroubrowser.activities;
+package org.hogel.naroubrowser.activity;
 
 import android.content.Intent;
 import android.content.res.Resources;
@@ -13,10 +13,10 @@ import android.view.View;
 import android.widget.ProgressBar;
 import com.google.inject.Inject;
 import org.hogel.naroubrowser.R;
-import org.hogel.naroubrowser.consts.UrlConst;
-import org.hogel.naroubrowser.db.dao.VisitedUrlDao;
-import org.hogel.naroubrowser.services.AnalyticsService;
-import org.hogel.naroubrowser.views.MainWebView;
+import org.hogel.naroubrowser.constant.UrlConstant;
+import org.hogel.naroubrowser.database.dao.VisitedUrlDao;
+import org.hogel.naroubrowser.service.AnalyticsService;
+import org.hogel.naroubrowser.view.MainWebView;
 import roboguice.inject.InjectView;
 
 
@@ -60,7 +60,7 @@ public class MainActivity extends AbstractActivity {
         } else {
             String url = getIntent().getDataString();
             if (TextUtils.isEmpty(url)) {
-                mainWebview.loadUrl(UrlConst.URL_LAUNCH);
+                mainWebview.loadUrl(UrlConstant.URL_LAUNCH);
             } else {
                 mainWebview.loadUrl(url);
             }
@@ -118,7 +118,7 @@ public class MainActivity extends AbstractActivity {
 
         if (id == R.id.action_bookmark) {
             analyticsService.trackMainMenu("bookmark");
-            mainWebview.loadUrl(UrlConst.URL_LAUNCH);
+            mainWebview.loadUrl(UrlConstant.URL_LAUNCH);
             return true;
         } else if (id == R.id.action_reload) {
             analyticsService.trackMainMenu("reload");
@@ -126,7 +126,7 @@ public class MainActivity extends AbstractActivity {
             return true;
         } else if (id == R.id.action_ranking) {
             analyticsService.trackMainMenu("ranking");
-            mainWebview.loadUrl(UrlConst.URL_RANKING);
+            mainWebview.loadUrl(UrlConstant.URL_RANKING);
             return true;
         } else if (id == R.id.action_about) {
             analyticsService.trackMainMenu("about");
