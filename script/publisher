@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+
+PACKAGE_NAME = "org.hogel.naroubrowser"
+
+require "yaml"
+require "google/apis/androidpublisher_v2"
+require "google/api_client/client_secrets"
+require "google/api_client/auth/key_utils"
+
+Publisher = Google::Apis::AndroidpublisherV2
+
+service = Publisher::AndroidPublisherService.new
+
+auth_path = File.expand_path(ENV["GOOGLE_AUTH_PATH"] || "~/.gradle/signing/narou_browser_secrets.yml")
+auth_opts = YAML.load_file(auth_path)
+signing_key = Google::APIClient::KeyUtils.load_from_pkcs12(File.expand_path(auth_opts["key_file"]), auth_opts["key_secret"])
+service.authorization = Signet::OAuth2::Client.new(
+  token_credential_uri: 'https://accounts.google.com/o/oauth2/token',
+  audience: 'https://accounts.google.com/o/oauth2/token',
+  scope: 'https://www.googleapis.com/auth/androidpublisher',
+  issuer: auth_opts["service_account_email"],
+  signing_key: signing_key,
+)
+
+edit = service.insert_edit(PACKAGE_NAME)
+
+apks = service.list_apks("org.hogel.naroubrowser", edit.id)
+
+apk = service.upload_apk(PACKAGE_NAME, edit_id, upload_source: "app/build/outputs/apk/app-release.apk")
