@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId "org.hogel.naroubrowser"
-        minSdkVersion 23
+        minSdkVersion 16
         targetSdkVersion 23
         versionCode 1_000_000
         versionName "1.0.0"
