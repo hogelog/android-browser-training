@@ -8,8 +8,7 @@ def releaseSigningProperties = "${System.env["HOME"]}/.gradle/signing/narou_brow
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
-    useLibrary 'org.apache.http.legacy'
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "org.hogel.naroubrowser"
@@ -36,13 +35,9 @@ android {
     buildTypes {
         debug {
             applicationIdSuffix ".debug"
-            minifyEnabled true
-            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         release {
-            minifyEnabled true
-            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
