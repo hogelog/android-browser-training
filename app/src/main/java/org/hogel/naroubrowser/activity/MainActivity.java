@@ -128,10 +128,6 @@ public class MainActivity extends AbstractActivity {
             analyticsService.trackMainMenu("ranking");
             mainWebview.loadUrl(UrlConstant.URL_RANKING);
             return true;
-        } else if (id == R.id.action_about) {
-            analyticsService.trackMainMenu("about");
-            startActivity(AboutActivity.createIntent(this));
-            return true;
         }
 
         return super.onOptionsItemSelected(item);

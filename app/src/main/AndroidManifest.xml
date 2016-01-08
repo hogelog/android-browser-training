@@ -34,9 +34,6 @@
                 <data android:host="ncode.syosetu.com" />
             </intent-filter>
         </activity>
-        <activity
-                android:name=".activity.AboutActivity"
-                />
 
     </application>
 
