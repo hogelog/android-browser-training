@@ -35,9 +35,11 @@ android {
     buildTypes {
         debug {
             applicationIdSuffix ".debug"
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         release {
+            debuggable true
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
@@ -80,4 +82,8 @@ dependencies {
     }
 
     debugCompile 'com.facebook.stetho:stetho:1.2.0'
+}
+
+project.tasks.withType(JavaCompile) { task ->
+    options.compilerArgs << "-AguiceAnnotationDatabasePackageName=org.hogel.naroubrowser"
 }
