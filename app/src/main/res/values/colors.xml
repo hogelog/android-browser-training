@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="action_menu">@android:color/primary_text_dark</color>
+    <color name="primary">@color/material_blue_500</color>
+    <color name="primary_dark">@color/material_blue_700</color>
+
+    <color name="material_blue_500">#2196F3</color>
+    <color name="material_blue_700">#1976D2</color>
 </resources>

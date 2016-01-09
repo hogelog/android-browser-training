@@ -19,12 +19,12 @@
         />
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <android.support.v7.widget.Toolbar
-            app:theme="@style/ToolbarStyle"
+    <Toolbar
+            android:theme="@style/ToolbarStyle"
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height"
-            android:background="?attr/colorPrimary"
+            android:background="@color/primary"
     />
 
     <ProgressBar

@@ -1,15 +1,17 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="windowActionModeOverlay">true</item>
+    <style name="AppTheme" parent="android:Theme.Material.Light.DarkActionBar">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionModeOverlay">true</item>
         <item name="android:actionBarSize">@dimen/toolbar_height</item>
+        <item name="android:colorPrimary">@color/primary</item>
+        <item name="android:colorPrimaryDark">@color/primary_dark</item>
     </style>
     <style name="ProgressBar.Horizontal" parent="android:Widget.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/progress_horizontal</item>
     </style>
-    <style name="ToolbarStyle" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+    <style name="ToolbarStyle" parent="android:ThemeOverlay.Material.Dark.ActionBar">
     </style>
 
 </resources>

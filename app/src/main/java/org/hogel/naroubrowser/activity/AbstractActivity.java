@@ -1,7 +1,7 @@
 package org.hogel.naroubrowser.activity;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import com.google.inject.Key;
 import roboguice.RoboGuice;
 import roboguice.inject.RoboInjector;
@@ -10,7 +10,7 @@ import roboguice.util.RoboContext;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AbstractActivity extends AppCompatActivity implements RoboContext {
+public class AbstractActivity extends Activity implements RoboContext {
     protected HashMap<Key<?>,Object> scopedObjects = new HashMap<>();
 
     @Override

@@ -4,13 +4,13 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toolbar;
 import com.google.inject.Inject;
 import org.hogel.naroubrowser.R;
 import org.hogel.naroubrowser.constant.UrlConstant;
@@ -74,7 +74,7 @@ public class MainActivity extends AbstractActivity {
     }
 
     private void setup() {
-        setSupportActionBar(toolbar);
+        setActionBar(toolbar);
 
         toolbarHeight = resources.getDimensionPixelSize(R.dimen.toolbar_height);
 
