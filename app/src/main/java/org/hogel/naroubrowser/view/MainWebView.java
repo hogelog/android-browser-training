@@ -34,8 +34,6 @@ public class MainWebView extends WebView {
     @Inject
     AnalyticsService analyticsService;
 
-    private boolean disableJavascript = false;
-
     private boolean pageLoading = false;
 
     public MainWebView(Context context) {
@@ -85,10 +83,6 @@ public class MainWebView extends WebView {
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             super.onPageStarted(view, url, favicon);
             progressSubject.onNext(0);
-            if (UrlConstant.PATTERN_URL_DISABLE_JS.matcher(url).find()) {
-                getSettings().setJavaScriptEnabled(false);
-                disableJavascript = true;
-            }
             pageLoading = true;
         }
 
@@ -97,10 +91,6 @@ public class MainWebView extends WebView {
             super.onPageFinished(view, url);
             progressSubject.onNext(100);
             visitPageSubject.onNext(Pair.create(url, getTitle()));
-            if (disableJavascript) {
-                getSettings().setJavaScriptEnabled(true);
-                disableJavascript = false;
-            }
             pageLoading = false;
         }
     }
