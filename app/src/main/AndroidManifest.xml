@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         package="org.hogel.naroubrowser"
         >
 
@@ -13,7 +14,7 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme"
             android:name=".BrowserApplication"
-            >
+            tools:ignore="AllowBackup">
         <meta-data android:name="roboguice.annotations.packages" android:value="org.hogel.naroubrowser"/>
         <activity
                 android:name=".activity.MainActivity"

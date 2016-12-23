@@ -10,7 +10,7 @@ import roboguice.util.RoboContext;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AbstractActivity extends Activity implements RoboContext {
+public abstract class AbstractActivity extends Activity implements RoboContext {
     protected HashMap<Key<?>,Object> scopedObjects = new HashMap<>();
 
     @Override

@@ -1,5 +1,6 @@
 package org.hogel.naroubrowser.view;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -57,6 +58,7 @@ public class MainWebView extends WebView {
         scrollYSubject.onNext(t - oldt);
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private void setup() {
         RoboGuice.injectMembers(getContext(), this);
 
