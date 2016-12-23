@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import android.util.Pair;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -68,7 +69,8 @@ public class MainWebView extends WebView {
 
     private class Client extends WebViewClient {
         @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+            final String url = getUrl();
             analyticsService.trackViewUrl(url);
 
             if (UrlConstant.PATTERN_URL_INSIDE.matcher(url).find()) {
