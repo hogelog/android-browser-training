@@ -11,13 +11,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toolbar;
+import butterknife.BindView;
 import com.google.inject.Inject;
 import org.hogel.naroubrowser.R;
 import org.hogel.naroubrowser.constant.UrlConstant;
 import org.hogel.naroubrowser.database.dao.VisitedUrlDao;
 import org.hogel.naroubrowser.service.AnalyticsService;
 import org.hogel.naroubrowser.view.MainWebView;
-import roboguice.inject.InjectView;
 
 
 public class MainActivity extends AbstractActivity {
@@ -31,16 +31,16 @@ public class MainActivity extends AbstractActivity {
     @Inject
     AnalyticsService analyticsService;
 
-    @InjectView(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    @InjectView(R.id.main_webview)
+    @BindView(R.id.main_webview)
     MainWebView mainWebview;
 
-    @InjectView(R.id.progress_bar)
+    @BindView(R.id.progress_bar)
     ProgressBar progressBar;
 
-    @InjectView(R.id.swipe_layout)
+    @BindView(R.id.swipe_layout)
     SwipeRefreshLayout swipeRefreshLayout;
 
     private int scrolling = 0;

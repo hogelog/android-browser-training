@@ -72,6 +72,9 @@ dependencies {
     provided 'org.roboguice:roboblender:3.0.1'
     apt 'org.roboguice:roboblender:3.0.1'
 
+    compile 'com.jakewharton:butterknife:8.4.0'
+    apt 'com.jakewharton:butterknife-compiler:8.4.0'
+
     debugCompile 'com.facebook.stetho:stetho:1.2.0'
 }
 

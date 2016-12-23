@@ -2,6 +2,7 @@ package org.hogel.naroubrowser.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import butterknife.ButterKnife;
 import com.google.inject.Key;
 import roboguice.RoboGuice;
 import roboguice.inject.RoboInjector;
@@ -28,7 +29,7 @@ public abstract class AbstractActivity extends Activity implements RoboContext {
     @Override
     public void onContentChanged() {
         super.onContentChanged();
-        RoboGuice.getInjector(this).injectViewMembers(this);
+        ButterKnife.bind(this);
     }
 
     @Override
