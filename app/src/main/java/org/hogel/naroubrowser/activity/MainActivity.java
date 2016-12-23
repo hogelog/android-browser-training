@@ -5,9 +5,11 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toolbar;
@@ -46,6 +48,9 @@ public class MainActivity extends AbstractActivity {
     private int scrolling = 0;
 
     private int toolbarHeight;
+    private int lastTouchAction;
+
+    private boolean toolbarShown = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,13 +83,31 @@ public class MainActivity extends AbstractActivity {
 
         toolbarHeight = resources.getDimensionPixelSize(R.dimen.toolbar_height);
 
-        mainWebview.setY(toolbarHeight);
+//        mainWebview.setY(toolbarHeight);
         mainWebview
             .listenScrollY(this::onListenScrollY)
             .listenProgress(this::onListenProgress)
-            .listenVisitPage(this::onListenVisitPage);
+            .listenVisitPage(this::onListenVisitPage)
+            .listenTouchEvent(this::onTouch);
 
         swipeRefreshLayout.setOnRefreshListener(mainWebview::reload);
+    }
+
+    private void showToolbar() {
+        toolbar.setVisibility(View.VISIBLE);
+    }
+
+    private void hideToolbar() {
+        toolbar.setVisibility(View.GONE);
+    }
+
+    private void toggleToolbar() {
+        if (toolbarShown) {
+            hideToolbar();
+        } else {
+            showToolbar();
+        }
+        toolbarShown = !toolbarShown;
     }
 
     private void resizeToolbar() {
@@ -150,7 +173,7 @@ public class MainActivity extends AbstractActivity {
             scrolling = 0;
         }
 
-        resizeToolbar();
+//        resizeToolbar();
     }
 
     private void onListenProgress(int progress) {
@@ -170,6 +193,14 @@ public class MainActivity extends AbstractActivity {
             visitedUrlDao.create(url, title);
         }
         scrolling = 0;
-        resizeToolbar();
+//        resizeToolbar();
+    }
+
+    private void onTouch(MotionEvent event) {
+        if (lastTouchAction == MotionEvent.ACTION_DOWN && event.getAction() == MotionEvent.ACTION_UP) {
+            toggleToolbar();
+        }
+        lastTouchAction = event.getAction();
+        Log.d("HOGE", event.toString());
     }
 }

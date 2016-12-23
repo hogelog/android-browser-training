@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.AttributeSet;
 import android.util.Pair;
+import android.view.MotionEvent;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
@@ -30,6 +31,8 @@ public class MainWebView extends WebView {
     private final Subject<Integer, Integer> scrollYSubject = PublishSubject.create();
 
     private final Subject<Integer, Integer> progressSubject = PublishSubject.create();
+
+    private final Subject<MotionEvent, MotionEvent> touchSubject = PublishSubject.create();
 
     private final Subject<Pair<String, String>, Pair<String, String>> visitPageSubject = PublishSubject.create();
 
@@ -56,6 +59,12 @@ public class MainWebView extends WebView {
         }
         scrollXSubject.onNext(l - oldl);
         scrollYSubject.onNext(t - oldt);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        touchSubject.onNext(event);
+        return super.onTouchEvent(event);
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -141,6 +150,11 @@ public class MainWebView extends WebView {
 
     public MainWebView listenVisitPage(Action1<Pair<String, String>> action) {
         visitPageSubject.subscribe(action);
+        return this;
+    }
+
+    public MainWebView listenTouchEvent(Action1<MotionEvent> action) {
+        touchSubject.subscribe(action);
         return this;
     }
 }
