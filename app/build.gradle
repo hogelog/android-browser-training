@@ -68,9 +68,9 @@ dependencies {
 
     compile 'commons-io:commons-io:2.4'
 
-    compile 'org.roboguice:roboguice:3.0.1'
-    provided 'org.roboguice:roboblender:3.0.1'
-    apt 'org.roboguice:roboblender:3.0.1'
+    compile 'com.github.stephanenicolas.toothpick:toothpick-runtime:1.0.3'
+    // compile 'com.github.stephanenicolas.toothpick:smoothie:1.0.3'
+    apt 'com.github.stephanenicolas.toothpick:toothpick-compiler:1.0.3'
 
     compile 'com.jakewharton:butterknife:8.4.0'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
