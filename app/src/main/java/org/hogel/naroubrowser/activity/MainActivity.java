@@ -1,7 +1,6 @@
 package org.hogel.naroubrowser.activity;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
@@ -12,24 +11,12 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toolbar;
 import butterknife.BindView;
-import com.google.inject.Inject;
 import org.hogel.naroubrowser.R;
 import org.hogel.naroubrowser.constant.UrlConstant;
-import org.hogel.naroubrowser.database.dao.VisitedUrlDao;
-import org.hogel.naroubrowser.service.AnalyticsService;
 import org.hogel.naroubrowser.view.MainWebView;
 
 
 public class MainActivity extends AbstractActivity {
-
-    @Inject
-    Resources resources;
-
-    @Inject
-    VisitedUrlDao visitedUrlDao;
-
-    @Inject
-    AnalyticsService analyticsService;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -76,7 +63,7 @@ public class MainActivity extends AbstractActivity {
     private void setup() {
         setActionBar(toolbar);
 
-        toolbarHeight = resources.getDimensionPixelSize(R.dimen.toolbar_height);
+        toolbarHeight = getResources().getDimensionPixelSize(R.dimen.toolbar_height);
 
         mainWebview.setY(toolbarHeight);
         mainWebview
@@ -117,15 +104,12 @@ public class MainActivity extends AbstractActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_bookmark) {
-            analyticsService.trackMainMenu("bookmark");
             mainWebview.loadUrl(UrlConstant.URL_LAUNCH);
             return true;
         } else if (id == R.id.action_reload) {
-            analyticsService.trackMainMenu("reload");
             mainWebview.reload();
             return true;
         } else if (id == R.id.action_ranking) {
-            analyticsService.trackMainMenu("ranking");
             mainWebview.loadUrl(UrlConstant.URL_RANKING);
             return true;
         }
@@ -164,11 +148,6 @@ public class MainActivity extends AbstractActivity {
     }
 
     private void onListenVisitPage(Pair<String, String> visitPage) {
-        String url = visitPage.first;
-        String title = visitPage.second;
-        if (!visitedUrlDao.isExist(url)) {
-            visitedUrlDao.create(url, title);
-        }
         scrolling = 0;
         resizeToolbar();
     }

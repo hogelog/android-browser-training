@@ -14,11 +14,8 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import com.google.inject.Inject;
 import org.hogel.naroubrowser.R;
 import org.hogel.naroubrowser.constant.UrlConstant;
-import org.hogel.naroubrowser.service.AnalyticsService;
-import roboguice.RoboGuice;
 import rx.functions.Action1;
 import rx.subjects.PublishSubject;
 import rx.subjects.Subject;
@@ -32,9 +29,6 @@ public class MainWebView extends WebView {
     private final Subject<Integer, Integer> progressSubject = PublishSubject.create();
 
     private final Subject<Pair<String, String>, Pair<String, String>> visitPageSubject = PublishSubject.create();
-
-    @Inject
-    AnalyticsService analyticsService;
 
     private boolean pageLoading = false;
 
@@ -60,8 +54,6 @@ public class MainWebView extends WebView {
 
     @SuppressLint("SetJavaScriptEnabled")
     private void setup() {
-        RoboGuice.injectMembers(getContext(), this);
-
         WebSettings webSettings = getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setAppCacheEnabled(true);
@@ -73,7 +65,6 @@ public class MainWebView extends WebView {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
             final String url = getUrl();
-            analyticsService.trackViewUrl(url);
 
             if (UrlConstant.PATTERN_URL_INSIDE.matcher(url).find()) {
                 return false;
