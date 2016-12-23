@@ -72,9 +72,6 @@ dependencies {
     provided 'org.roboguice:roboblender:3.0.1'
     apt 'org.roboguice:roboblender:3.0.1'
 
-    provided "org.projectlombok:lombok:1.16.6"
-	apt "org.projectlombok:lombok:1.16.6"
-
     debugCompile 'com.facebook.stetho:stetho:1.2.0'
 }
 

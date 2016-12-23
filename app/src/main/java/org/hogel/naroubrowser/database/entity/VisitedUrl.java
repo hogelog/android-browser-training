@@ -1,12 +1,20 @@
 package org.hogel.naroubrowser.database.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
-@Data
-@AllArgsConstructor(suppressConstructorProperties = true)
 public class VisitedUrl {
     String url;
 
     String title;
+
+    public VisitedUrl(String url, String title) {
+        this.url = url;
+        this.title = title;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public String getTitle() {
+        return title;
+    }
 }
