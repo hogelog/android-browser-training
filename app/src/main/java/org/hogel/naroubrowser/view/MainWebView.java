@@ -115,16 +115,6 @@ public class MainWebView extends WebView {
         }
     }
 
-    public MainWebView listenScrollX(Action1<Integer> action) {
-        scrollXSubject.subscribe(action);
-        return this;
-    }
-
-    public MainWebView listenScrollY(Action1<Integer> action) {
-        scrollYSubject.subscribe(action);
-        return this;
-    }
-
     public MainWebView listenProgress(Action1<Integer> action) {
         progressSubject.subscribe(action);
         return this;
