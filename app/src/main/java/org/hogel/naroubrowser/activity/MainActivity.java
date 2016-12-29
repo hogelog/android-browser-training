@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
-import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,10 +28,6 @@ public class MainActivity extends AbstractActivity {
 
     @BindView(R.id.swipe_layout)
     SwipeRefreshLayout swipeRefreshLayout;
-
-    private int scrolling = 0;
-
-    private int toolbarHeight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,28 +58,9 @@ public class MainActivity extends AbstractActivity {
     private void setup() {
         setActionBar(toolbar);
 
-        toolbarHeight = getResources().getDimensionPixelSize(R.dimen.toolbar_height);
-
-        mainWebview.setY(toolbarHeight);
-        mainWebview
-            .listenScrollY(this::onListenScrollY)
-            .listenProgress(this::onListenProgress)
-            .listenVisitPage(this::onListenVisitPage);
+        mainWebview.listenProgress(this::onListenProgress);
 
         swipeRefreshLayout.setOnRefreshListener(mainWebview::reload);
-    }
-
-    private void resizeToolbar() {
-        toolbar.setTranslationY(-scrolling);
-        progressBar.setTranslationY(-scrolling);
-
-        if (scrolling == 0) {
-            swipeRefreshLayout.setTranslationY(toolbarHeight);
-            mainWebview.setTranslationY(0);
-        } else {
-            swipeRefreshLayout.setTranslationY(0);
-            mainWebview.setTranslationY(toolbarHeight - scrolling);
-        }
     }
 
     @Override
@@ -126,17 +102,6 @@ public class MainActivity extends AbstractActivity {
         super.onBackPressed();
     }
 
-    private void onListenScrollY(int y) {
-        scrolling += y;
-        if (scrolling > toolbarHeight) {
-            scrolling = toolbarHeight;
-        } else if (scrolling < 0) {
-            scrolling = 0;
-        }
-
-        resizeToolbar();
-    }
-
     private void onListenProgress(int progress) {
         progressBar.setProgress(progress);
         if (progress == 0) {
@@ -145,10 +110,5 @@ public class MainActivity extends AbstractActivity {
             progressBar.setVisibility(View.GONE);
             swipeRefreshLayout.setRefreshing(false);
         }
-    }
-
-    private void onListenVisitPage(Pair<String, String> visitPage) {
-        scrolling = 0;
-        resizeToolbar();
     }
 }
